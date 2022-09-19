@@ -40,3 +40,7 @@ testem.log
 Thumbs.db
 
 .angular
+
+sensors.config.ts
+mqtt.config.ts
+

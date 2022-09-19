@@ -1,10 +1,13 @@
 import { Module } from '@nestjs/common';
+import SensorModule from '../sensors/sensors.module';
 
 import AppController from './app.controller';
 import AppService from './app.service';
 
 @Module({
-  imports: [],
+  imports: [
+    SensorModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
