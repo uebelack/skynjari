@@ -41,6 +41,6 @@ Thumbs.db
 
 .angular
 
-sensors.config.ts
-mqtt.config.ts
+sensors.config.js
+mqtt.config.js
 

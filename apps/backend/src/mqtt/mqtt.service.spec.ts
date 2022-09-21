@@ -1,3 +1,4 @@
+import { resolve } from 'path';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigService } from '@nestjs/config';
 import { EventEmitterModule, EventEmitter2 } from '@nestjs/event-emitter';
@@ -9,12 +10,7 @@ import MqttModule from './mqtt.module';
 jest.mock('mqtt', () => ({ connect: jest.fn() }));
 
 describe('MqttService', () => {
-  const configService = {
-    get: () => [{
-      url: 'mqtt://192.168.0.210/1883',
-      inboundTopic: 'skynjari/inbound/#',
-    }],
-  };
+  jest.spyOn(ConfigService.prototype, 'get').mockReturnValue(resolve(__dirname, '__fixtures__'));
 
   const eventEmitter = { emit: jest.fn() };
   const client = { on: jest.fn(), subscribe: jest.fn() };
@@ -22,9 +18,7 @@ describe('MqttService', () => {
   const createService = async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [MqttModule, EventEmitterModule.forRoot()],
-    }).overrideProvider(ConfigService)
-      .useValue(configService)
-      .overrideProvider(EventEmitter2)
+    }).overrideProvider(EventEmitter2)
       .useValue(eventEmitter)
       .compile();
 

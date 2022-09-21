@@ -1,48 +1,22 @@
+import { resolve } from 'path';
 import * as request from 'supertest';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigService } from '@nestjs/config';
 import { INestApplication } from '@nestjs/common';
-import Sensor from './sensor.interface';
 import SensorsController from './sensors.controller';
 import SensorsService from './sensors.service';
-import SensorType from './sensor-type.enum';
 
 describe('SensorsController', () => {
   let app: INestApplication;
   let controller: SensorsController;
-  let sensors: Sensor[];
 
   beforeEach(async () => {
-    sensors = [
-      {
-        key: 'ghi',
-        name: 'Test Power Meter',
-        type: SensorType.PowerMeter,
-        measurements: {
-          consumption: {
-            name: 'Consumption',
-            unit: 'Wh',
-            value: 2132.21,
-          },
-          totalizer: {
-            name: 'Totalizer',
-            unit: 'kWh',
-            value: 123.23,
-          },
-        },
-      },
-    ];
-
-    const configService = {
-      get: () => sensors,
-    };
+    jest.spyOn(ConfigService.prototype, 'get').mockReturnValue(resolve(__dirname, '__fixtures__'));
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [SensorsService, ConfigService],
       controllers: [SensorsController],
-    }).overrideProvider(ConfigService)
-      .useValue(configService)
-      .compile();
+    }).compile();
 
     app = module.createNestApplication();
     await app.init();
@@ -57,5 +31,30 @@ describe('SensorsController', () => {
   it('should /GET sensors', () => request(app.getHttpServer())
     .get('/sensors')
     .expect(200)
-    .expect(sensors));
+    .expect([{
+      key: 'power-meter',
+      name: 'Power',
+      type: 'power-meter',
+      measurements: {
+        consumption: { name: 'Consumption', unit: 'Wh' },
+        totalizer: { name: 'Totalizer', unit: 'kWh' },
+      },
+    }, {
+      key: 'water-meter',
+      name: 'Water',
+      type: 'water-meter',
+      measurements: {
+        consumption: { name: 'Consumption', unit: 'L' },
+        totalizer: { name: 'Totalizer', unit: 'L' },
+      },
+    }, {
+      key: 'thermometer-living',
+      name: 'Thermometer Living',
+      type: 'thermometer',
+      measurements: {
+        temperature: { name: 'Temperature', unit: '°C' },
+        humidity: { name: 'Humidity', unit: '%' },
+        pressure: { name: 'Pressure', unit: 'hPa' },
+      },
+    }]));
 });

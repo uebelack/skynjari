@@ -1,16 +1,10 @@
 import { Module } from '@nestjs/common';
 
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigService } from '@nestjs/config';
 
 import MqttService from './mqtt.service';
-import mqttConfig from '../config/mqtt.config';
 
 @Module({
-  imports: [
-    ConfigModule.forRoot({
-      load: [mqttConfig],
-    }),
-  ],
   providers: [MqttService, ConfigService],
 })
 class MqttModule {}
