@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { OnEvent } from '@nestjs/event-emitter';
 import Sensor from './sensor.interface';
+import MeasurementsArrivedEvent from '../measurements/measurements.arrived.event';
 
 @Injectable()
 class SensorsService {
@@ -12,6 +14,20 @@ class SensorsService {
 
   async findAll(): Promise<Sensor[]> {
     return Promise.resolve(this.sensors);
+  }
+
+  async findByKey(key: string): Promise<Sensor> {
+    return Promise.resolve(this.sensors.find((sensor) => sensor.key === key));
+  }
+
+  @OnEvent(MeasurementsArrivedEvent.KEY, { async: true })
+  async handleMeasurementsArrivedEvent(event: MeasurementsArrivedEvent) {
+    const sensor = await this.findByKey(event.sensorKey);
+    if (sensor && sensor.measurements) {
+      Object.keys(sensor.measurements).forEach((key) => {
+        sensor.measurements[key].value = event.measurements[key];
+      });
+    }
   }
 }
 

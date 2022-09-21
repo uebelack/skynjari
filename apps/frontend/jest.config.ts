@@ -1,6 +1,6 @@
 /* eslint-disable */
 export default {
-  displayName: 'web',
+  displayName: 'frontend',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
@@ -9,7 +9,7 @@ export default {
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },
-  coverageDirectory: '../../coverage/apps/web',
+  coverageDirectory: '../../coverage/apps/frontend',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': 'jest-preset-angular',
   },
@@ -19,4 +19,12 @@ export default {
     'jest-preset-angular/build/serializers/ng-snapshot',
     'jest-preset-angular/build/serializers/html-comment',
   ],
+  coverageThreshold: {
+    global: {
+        branches: 100,
+        functions: 100,
+        lines: 100,
+        statements: 100,
+    },
+  },
 };

@@ -1,6 +1,8 @@
 import { Logger, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import * as mqtt from 'mqtt';
+import MeasurementsArrivedEvent from '../measurements/measurements.arrived.event';
 import Mqtt from './mqtt.interface';
 
 @Injectable()
@@ -9,7 +11,7 @@ class MqttService {
 
   brokers: Mqtt[];
 
-  constructor(private configService: ConfigService) {
+  constructor(private configService: ConfigService, private eventEmitter: EventEmitter2) {
     this.brokers = configService.get('brokers');
     this.start();
   }
@@ -29,7 +31,14 @@ class MqttService {
       });
 
       client.on('message', (topic, message) => {
-        this.logger.debug(message.toString());
+        const event = new MeasurementsArrivedEvent();
+        event.sensorKey = topic.split('/').pop();
+        event.measurements = {};
+        const measurements = JSON.parse(message.toString());
+        Object.keys(measurements).forEach((key) => {
+          event.measurements[key] = parseFloat(measurements[key]);
+        });
+        this.eventEmitter.emit(MeasurementsArrivedEvent.KEY, event);
       });
     });
   }

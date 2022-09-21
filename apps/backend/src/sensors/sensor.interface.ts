@@ -5,7 +5,7 @@ interface Sensor {
   key: string
   name: string
   type: SensorType
-  measurements: Measurement[]
+  measurements: Record<string, Measurement>
 }
 
 export default Sensor;

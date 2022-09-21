@@ -1,23 +1,23 @@
 {
   "projectType": "application",
-  "sourceRoot": "apps/web/src",
+  "sourceRoot": "apps/frontend/src",
   "prefix": "skynjari",
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/web",
-        "index": "apps/web/src/index.html",
-        "main": "apps/web/src/main.ts",
-        "polyfills": "apps/web/src/polyfills.ts",
-        "tsConfig": "apps/web/tsconfig.app.json",
+        "outputPath": "dist/apps/frontend",
+        "index": "apps/frontend/src/index.html",
+        "main": "apps/frontend/src/main.ts",
+        "polyfills": "apps/frontend/src/polyfills.ts",
+        "tsConfig": "apps/frontend/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
-          "apps/web/src/favicon.ico",
-          "apps/web/src/assets"
+          "apps/frontend/src/favicon.ico",
+          "apps/frontend/src/assets"
         ],
-        "styles": ["apps/web/src/styles.scss"],
+        "styles": ["apps/frontend/src/styles.scss"],
         "scripts": []
       },
       "configurations": {
@@ -36,8 +36,8 @@
           ],
           "fileReplacements": [
             {
-              "replace": "apps/web/src/environments/environment.ts",
-              "with": "apps/web/src/environments/environment.prod.ts"
+              "replace": "apps/frontend/src/environments/environment.ts",
+              "with": "apps/frontend/src/environments/environment.prod.ts"
             }
           ],
           "outputHashing": "all"
@@ -57,37 +57,37 @@
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
-          "browserTarget": "web:build:production"
+          "browserTarget": "frontend:build:production"
         },
         "development": {
-          "browserTarget": "web:build:development"
+          "browserTarget": "frontend:build:development"
         }
       },
       "defaultConfiguration": "development",
       "options": {
-        "proxyConfig": "apps/web/proxy.conf.json"
+        "proxyConfig": "apps/frontend/proxy.conf.json"
       }
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "browserTarget": "web:build"
+        "browserTarget": "frontend:build"
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
         "lintFilePatterns": [
-          "apps/web/**/*.ts",
-          "apps/web/**/*.html"
+          "apps/frontend/**/*.ts",
+          "apps/frontend/**/*.html"
         ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/web"],
+      "outputs": ["coverage/apps/frontend"],
       "options": {
-        "jestConfig": "apps/web/jest.config.ts",
+        "jestConfig": "apps/frontend/jest.config.ts",
         "passWithNoTests": true
       }
     }

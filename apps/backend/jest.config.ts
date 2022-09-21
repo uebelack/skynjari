@@ -13,4 +13,12 @@ export default {
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
   coverageDirectory: '../../coverage/apps/backend',
+  coverageThreshold: {
+    global: {
+        branches: 100,
+        functions: 100,
+        lines: 100,
+        statements: 100,
+    },
+  },
 };

@@ -56,5 +56,5 @@
       "style": "scss"
     }
   },
-  "defaultProject": "web"
+  "defaultProject": "frontend"
 }
