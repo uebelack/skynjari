@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "nx",
     "start": "nx run-many --parallel --target=serve --projects=frontend,backend",
-    "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2020 browser module main",
+    "postinstall": "node ./create-config.js && node ./decorate-angular-cli.js && ngcc --properties es2020 browser module main",
     "build": "nx build",
     "test": "nx run-many --parallel --target=test --projects=frontend,backend --coverage",
     "test:backend": "nx test --project=backend --watch --coverage",
