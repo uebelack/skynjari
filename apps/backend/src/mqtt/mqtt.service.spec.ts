@@ -1,4 +1,6 @@
 import { resolve } from 'path';
+import { readFileSync } from 'fs';
+import * as yaml from 'js-yaml';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigService } from '@nestjs/config';
 import { EventEmitterModule, EventEmitter2 } from '@nestjs/event-emitter';
@@ -10,12 +12,13 @@ import MqttModule from './mqtt.module';
 jest.mock('mqtt', () => ({ connect: jest.fn() }));
 
 describe('MqttService', () => {
-  jest.spyOn(ConfigService.prototype, 'get').mockReturnValue(resolve(__dirname, '__fixtures__'));
-
   const eventEmitter = { emit: jest.fn() };
   const client = { on: jest.fn(), subscribe: jest.fn() };
 
   const createService = async () => {
+    const config = yaml.load(readFileSync(resolve(__dirname, '__fixtures__', 'mqtt.yaml'), 'utf8'));
+    jest.spyOn(ConfigService.prototype, 'get').mockReturnValue(config.brokers);
+
     const module: TestingModule = await Test.createTestingModule({
       imports: [MqttModule, EventEmitterModule.forRoot()],
     }).overrideProvider(EventEmitter2)
@@ -67,5 +70,16 @@ describe('MqttService', () => {
         totalizer: 23432.32,
       },
     });
+  });
+
+  it('should not crash if no broker is configured', async () => {
+    jest.spyOn(ConfigService.prototype, 'get').mockReturnValue(undefined);
+    const module: TestingModule = await Test.createTestingModule({
+      imports: [MqttModule, EventEmitterModule.forRoot()],
+    }).overrideProvider(EventEmitter2)
+      .useValue(eventEmitter)
+      .compile();
+
+    expect(() => module.get<MqttService>(MqttService)).not.toThrow();
   });
 });

@@ -1,6 +1,9 @@
+import { ConfigService } from '@nestjs/config';
+import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { Test, TestingModule } from '@nestjs/testing';
-import { ConfigService } from '@nestjs/config';
+import * as yaml from 'js-yaml';
+
 import SensorsService from './sensors.service';
 import SensorType from './sensor-type.enum';
 import MeasurementsArrivedEvent from '../measurements/measurements.arrived.event';
@@ -9,8 +12,8 @@ describe('SensorsService', () => {
   let service: SensorsService;
 
   beforeEach(async () => {
-    jest.spyOn(ConfigService.prototype, 'get').mockReturnValue(resolve(__dirname, '__fixtures__'));
-
+    const config = yaml.load(readFileSync(resolve(__dirname, '__fixtures__', 'sensors.yaml'), 'utf8'));
+    jest.spyOn(ConfigService.prototype, 'get').mockReturnValue(config.sensors);
     const module: TestingModule = await Test.createTestingModule({
       providers: [SensorsService, ConfigService],
     }).compile();
@@ -72,5 +75,15 @@ describe('SensorsService', () => {
         },
       },
     });
+  });
+
+  it('should not crash if no sensor is configured', async () => {
+    jest.spyOn(ConfigService.prototype, 'get').mockReturnValue(undefined);
+
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [SensorsService, ConfigService],
+    }).compile();
+
+    expect(() => module.get<SensorsService>(SensorsService)).not.toThrow();
   });
 });

@@ -1,9 +1,7 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
-import configuration from '../configuration';
 
 import AppController from './app.controller';
 import AppService from './app.service';
@@ -13,9 +11,6 @@ import MqttModule from '../mqtt/mqtt.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      load: [configuration],
-    }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'frontend'),
     }),

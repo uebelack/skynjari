@@ -1,5 +1,7 @@
 import { resolve } from 'path';
 import * as request from 'supertest';
+import { readFileSync } from 'fs';
+import * as yaml from 'js-yaml';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigService } from '@nestjs/config';
 import { INestApplication } from '@nestjs/common';
@@ -11,8 +13,8 @@ describe('SensorsController', () => {
   let controller: SensorsController;
 
   beforeEach(async () => {
-    jest.spyOn(ConfigService.prototype, 'get').mockReturnValue(resolve(__dirname, '__fixtures__'));
-
+    const config = yaml.load(readFileSync(resolve(__dirname, '__fixtures__', 'sensors.yaml'), 'utf8'));
+    jest.spyOn(ConfigService.prototype, 'get').mockReturnValue(config.sensors);
     const module: TestingModule = await Test.createTestingModule({
       providers: [SensorsService, ConfigService],
       controllers: [SensorsController],

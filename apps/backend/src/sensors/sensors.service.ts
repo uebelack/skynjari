@@ -1,5 +1,3 @@
-import { resolve } from 'path';
-import { existsSync, readFileSync } from 'fs-extra';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { OnEvent } from '@nestjs/event-emitter';
@@ -11,12 +9,7 @@ class SensorsService {
   sensors: Sensor[] = [];
 
   constructor(private configService: ConfigService) {
-    const sensorsConfigFile = resolve(this.configService.get('configurationDirectory'), 'sensors.config.js');
-    if (existsSync(sensorsConfigFile)) {
-      // eslint-disable-next-line no-eval
-      const sensorsConfig = eval(readFileSync(sensorsConfigFile).toString())();
-      this.sensors = sensorsConfig.sensors;
-    }
+    this.sensors = this.configService.get('sensors') || [];
   }
 
   async findAll(): Promise<Sensor[]> {
