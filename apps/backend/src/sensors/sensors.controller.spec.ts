@@ -22,7 +22,7 @@ describe('SensorsController', () => {
           consumption: {
             name: 'Consumption',
             unit: 'Wh',
-            value: 2132.23,
+            value: 2132.21,
           },
           totalizer: {
             name: 'Totalizer',
