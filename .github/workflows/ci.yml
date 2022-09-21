@@ -14,8 +14,8 @@ jobs:
           fetch-depth: 0
       - uses: nrwl/nx-set-shas@v3
       - run: yarn install
-      - run: npx nx workspace-lint
-      - run: npx nx format:check
-      - run: npx nx affected --target=lint
-      - run: npx nx affected --target=test --ci --coverage
-      - run: npx nx affected --target=build
+      - run: yarn nx workspace-lint
+      - run: yarn nx format:check
+      - run: yarn nx affected --target=lint
+      - run: yarn nx affected --target=test --ci --coverage
+      - run: yarn nx affected --target=build
