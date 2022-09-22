@@ -1,8 +1,8 @@
-import { Get, Controller } from '@nestjs/common';
 import { ApiResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Get, Controller } from '@nestjs/common';
+import { Sensor } from '@skynjari/interfaces';
 
 import SensorsService from './sensors.service';
-import Sensor from './sensor.interface';
 
 @ApiTags('sensors')
 @Controller('sensors')

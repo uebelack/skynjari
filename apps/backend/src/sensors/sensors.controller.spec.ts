@@ -1,10 +1,11 @@
-import { resolve } from 'path';
-import * as request from 'supertest';
-import { readFileSync } from 'fs';
-import * as yaml from 'js-yaml';
-import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigService } from '@nestjs/config';
 import { INestApplication } from '@nestjs/common';
+import { readFileSync } from 'fs';
+import { resolve } from 'path';
+import { Test, TestingModule } from '@nestjs/testing';
+import * as request from 'supertest';
+import * as yaml from 'js-yaml';
+import { Sensor } from '@skynjari/interfaces';
 import SensorsController from './sensors.controller';
 import SensorsService from './sensors.service';
 
@@ -13,7 +14,7 @@ describe('SensorsController', () => {
   let controller: SensorsController;
 
   beforeEach(async () => {
-    const config = yaml.load(readFileSync(resolve(__dirname, '__fixtures__', 'sensors.yaml'), 'utf8'));
+    const config = yaml.load(readFileSync(resolve(__dirname, '__fixtures__', 'sensors.yaml'), 'utf8')) as { sensors: Sensor[] };
     jest.spyOn(ConfigService.prototype, 'get').mockReturnValue(config.sensors);
     const module: TestingModule = await Test.createTestingModule({
       providers: [SensorsService, ConfigService],

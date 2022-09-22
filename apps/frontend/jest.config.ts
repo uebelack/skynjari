@@ -6,6 +6,7 @@ export default {
   globals: {
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.spec.json',
+      isolatedModules: false,
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },

@@ -1,9 +1,9 @@
 import { IClientOptions } from 'mqtt';
 
-interface Mqtt {
+interface MqttBroker {
   url: string
   options: IClientOptions
   inboundTopic: string
 }
 
-export default Mqtt;
+export default MqttBroker;

@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 class AppComponent {
-  title = 'web';
+  title = 'Skynjari';
 }
 
 export default AppComponent;

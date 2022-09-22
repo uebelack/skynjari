@@ -1,5 +1,5 @@
 import SensorType from './sensor-type.enum';
-import Measurement from '../measurements/measurement.interface';
+import Measurement from './measurement.interface';
 
 interface Sensor {
   key: string

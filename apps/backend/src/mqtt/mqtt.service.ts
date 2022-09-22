@@ -3,13 +3,13 @@ import { ConfigService } from '@nestjs/config';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import * as mqtt from 'mqtt';
 import MeasurementsArrivedEvent from '../measurements/measurements.arrived.event';
-import Mqtt from './mqtt.interface';
+import MqttBroker from './mqtt-broker.interface';
 
 @Injectable()
 class MqttService {
   private readonly logger = new Logger(MqttService.name);
 
-  private brokers: Mqtt[];
+  private brokers: MqttBroker[];
 
   constructor(private configService: ConfigService, private eventEmitter: EventEmitter2) {
     this.brokers = configService.get('brokers') || [];

@@ -8,6 +8,7 @@ import { Logger } from '@nestjs/common';
 import { connect } from 'mqtt';
 import MqttService from './mqtt.service';
 import MqttModule from './mqtt.module';
+import MqttBroker from './mqtt-broker.interface';
 
 jest.mock('mqtt', () => ({ connect: jest.fn() }));
 
@@ -16,7 +17,7 @@ describe('MqttService', () => {
   const client = { on: jest.fn(), subscribe: jest.fn() };
 
   const createService = async () => {
-    const config = yaml.load(readFileSync(resolve(__dirname, '__fixtures__', 'mqtt.yaml'), 'utf8'));
+    const config = yaml.load(readFileSync(resolve(__dirname, '__fixtures__', 'mqtt.yaml'), 'utf8')) as { brokers: MqttBroker };
     jest.spyOn(ConfigService.prototype, 'get').mockReturnValue(config.brokers);
 
     const module: TestingModule = await Test.createTestingModule({
