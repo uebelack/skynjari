@@ -1,5 +1,4 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockComponent, MockProvider } from 'ng-mocks';
 import { Store } from '@ngrx/store';
@@ -18,7 +17,7 @@ describe('AppComponent', () => {
         MockComponent(SensorListComponent),
       ],
       providers: [
-        MockProvider(SensorsService, { getSensors: () => of([]) }),
+        MockProvider(SensorsService),
         MockProvider(Store),
       ],
     }).compileComponents();

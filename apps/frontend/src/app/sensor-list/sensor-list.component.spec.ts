@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import SensorListComponent from './sensor-list.component';
+import sensors from '../sensors/sensors.fixture';
 
 describe('SensorListComponent', () => {
   let component: SensorListComponent;
@@ -12,6 +13,7 @@ describe('SensorListComponent', () => {
 
     fixture = TestBed.createComponent(SensorListComponent);
     component = fixture.componentInstance;
+    component.sensors = sensors;
     fixture.detectChanges();
   });
 

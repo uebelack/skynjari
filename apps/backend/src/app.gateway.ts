@@ -9,7 +9,7 @@ class AppGateway {
   @WebSocketServer() server;
 
   @OnEvent(MeasurementsArrivedEvent.KEY, { async: true })
-  async handleMeasurementsArrivedEvent(event: MeasurementsArrivedEvent) {
+  handleMeasurementsArrivedEvent(event: MeasurementsArrivedEvent) {
     this.server.emit('measurements', JSON.stringify(event));
   }
 }

@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { Sensor } from '@skynjari/interfaces';
 
-const sensorsRetrieved = createAction('[Sensors] retrieved', props<{ sensors: ReadonlyArray<Sensor> }>());
+const sensorsUpdated = createAction('[Sensors] updated', props<{ sensors: ReadonlyArray<Sensor> }>());
 
-export default sensorsRetrieved;
+export default sensorsUpdated;
