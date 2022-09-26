@@ -11,7 +11,7 @@ import sensorsReducer from './sensors/sensors.reducer';
 import SensorsService from './sensors/sensors.service';
 import SensorListComponent from './sensor-list/sensor-list.component';
 
-const config: SocketIoConfig = { url: 'http://localhost:3333', options: {} };
+const config: SocketIoConfig = { url: window.location.origin, options: {} };
 
 @NgModule({
   declarations: [AppComponent, SensorListComponent],

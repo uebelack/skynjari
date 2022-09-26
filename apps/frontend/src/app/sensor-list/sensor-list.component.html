@@ -2,7 +2,7 @@
   <li>{{ sensor.name }}
     <ul>
       <li *ngFor="let item of sensor.measurements | keyvalue">
-        {{ item.value.name }}: {{ item.value.value }}
+        {{ item.value.name }}: {{ item.value.value }} {{ item.value.unit }}
       </li>
     </ul>
   </li>
