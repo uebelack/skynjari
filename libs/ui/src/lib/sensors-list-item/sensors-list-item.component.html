@@ -1,8 +1,7 @@
-<li class="w-full bg-base-100 mb-3 shadow-xl rounded-box p-3">
+<li class="w-full bg-base-100 mb-3 shadow-md rounded-box p-3">
   <h2 class="text-lg">{{ sensor.name }}</h2>
-  <ul>
-    <li *ngFor="let item of sensor.measurements | keyvalue">
-      {{ item.value.name }}: {{ item.value.value }} {{ item.value.unit }}
-    </li>
-  </ul>
+  <skynjari-sensors-list-item-power-meter 
+    *ngIf="sensor.type === 'power-meter'"
+    [sensor]="sensor">
+  </skynjari-sensors-list-item-power-meter>
 </li>

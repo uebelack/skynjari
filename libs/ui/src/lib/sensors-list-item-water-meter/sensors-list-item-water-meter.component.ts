@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Sensor } from '@skynjari/data-model';
 
 @Component({
   selector: 'skynjari-sensors-list-item-water-meter',
   templateUrl: './sensors-list-item-water-meter.component.html',
-  styleUrls: ['./sensors-list-item-water-meter.component.scss'],
 })
-export class SensorsListItemWaterMeterComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
+class SensorsListItemWaterMeterComponent {
+  @Input() sensor!: Sensor;
 }
+
+export default SensorsListItemWaterMeterComponent;

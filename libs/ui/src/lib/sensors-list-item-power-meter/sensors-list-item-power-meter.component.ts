@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Sensor } from '@skynjari/data-model';
 
 @Component({
   selector: 'skynjari-sensors-list-item-power-meter',
   templateUrl: './sensors-list-item-power-meter.component.html',
-  styleUrls: ['./sensors-list-item-power-meter.component.scss'],
 })
-export class SensorsListItemPowerMeterComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
+class SensorsListItemPowerMeterComponent {
+  @Input() sensor!: Sensor;
 }
+
+export default SensorsListItemPowerMeterComponent;

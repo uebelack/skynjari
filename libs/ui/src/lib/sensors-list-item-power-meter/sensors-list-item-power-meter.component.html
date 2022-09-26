@@ -1,1 +1,4 @@
-<p>sensors-list-item-power-meter works!</p>
+<div class="flex justify-end items-end">
+  <div class="text-5xl">{{sensor.measurements['consumption'].value | number: '1.0-0'}}</div>
+  <div class="ml-1">{{sensor.measurements['consumption'].unit}}</div>
+</div>

@@ -33,7 +33,7 @@ const config = {
       },
     },
     {
-      key: 'thermometer-living',
+      key: 'thermo-meter-living',
       name: 'Thermometer Living',
       type: SensorType.Thermometer,
       measurements: {

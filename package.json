@@ -11,7 +11,8 @@
     "start": "nx run-many --parallel --target=serve --projects=frontend,backend",
     "test:backend": "nx test --project=backend --watch --coverage",
     "test:frontend": "nx test --project=frontend --watch --coverage",
-    "test": "nx run-many --parallel --target=test --projects=frontend,backend --coverage"
+    "test:ui": "nx test --project=ui --watch --coverage",
+    "test": "nx run-many --parallel --target=test --projects=frontend,backend,ui --coverage"
   },
   "private": true,
   "dependencies": {

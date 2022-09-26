@@ -47,9 +47,9 @@ describe('SensorsController', () => {
         totalizer: { name: 'Totalizer', unit: 'L' },
       },
     }, {
-      key: 'thermometer-living',
+      key: 'thermo-meter-living',
       name: 'Thermometer Living',
-      type: 'thermometer',
+      type: 'thermo-meter',
       measurements: {
         temperature: { name: 'Temperature', unit: '°C' },
         humidity: { name: 'Humidity', unit: '%' },

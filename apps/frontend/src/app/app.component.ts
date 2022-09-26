@@ -7,7 +7,6 @@ import selectSensors from './sensors/sensors.selector';
 @Component({
   selector: 'skynjari-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
 })
 class AppComponent implements OnInit {
   sensors$ = this.store.select(selectSensors);

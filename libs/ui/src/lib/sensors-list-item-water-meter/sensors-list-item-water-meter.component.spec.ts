@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SensorsListItemWaterMeterComponent } from './sensors-list-item-water-meter.component';
+import SensorsListItemWaterMeterComponent from './sensors-list-item-water-meter.component';
 
 describe('SensorsListItemWaterMeterComponent', () => {
   let component: SensorsListItemWaterMeterComponent;
