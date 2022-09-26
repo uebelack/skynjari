@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { MeasurementsArrivedEvent } from '@skynjari/interfaces';
+import { MeasurementsArrivedEvent } from '@skynjari/data-model';
 import AppGateway from './app.gateway';
 
 describe('AppGateway', () => {

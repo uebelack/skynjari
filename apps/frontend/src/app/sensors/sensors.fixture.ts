@@ -1,4 +1,4 @@
-import { Sensor, SensorType } from '@skynjari/interfaces';
+import { Sensor, SensorType } from '@skynjari/data-model';
 
 const sensors: Sensor[] = [
   {

@@ -15,7 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@skynjari/interfaces": ["libs/interfaces/src/index.ts"]
+      "@skynjari/data-model": ["libs/data-model/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

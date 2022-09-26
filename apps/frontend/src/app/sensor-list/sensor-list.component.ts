@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Sensor } from '@skynjari/interfaces';
+import { Sensor } from '@skynjari/data-model';
 
 @Component({
   selector: 'skynjari-sensor-list',

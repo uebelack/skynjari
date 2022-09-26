@@ -1,6 +1,6 @@
 import { ApiResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Get, Controller } from '@nestjs/common';
-import { Sensor } from '@skynjari/interfaces';
+import { Sensor } from '@skynjari/data-model';
 
 import SensorsService from './sensors.service';
 

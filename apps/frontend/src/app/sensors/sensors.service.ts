@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { Socket } from 'ngx-socket-io';
-import { Sensor, MeasurementsArrivedEvent } from '@skynjari/interfaces';
+import { Sensor, MeasurementsArrivedEvent } from '@skynjari/data-model';
 import sensorsUpdated from './sensors.actions';
 
 @Injectable({

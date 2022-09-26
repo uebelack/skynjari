@@ -1,4 +1,4 @@
-import { SensorType } from '@skynjari/interfaces';
+import { SensorType } from '@skynjari/data-model';
 
 const config = {
   sensors: [

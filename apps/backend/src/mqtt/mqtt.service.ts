@@ -2,7 +2,7 @@ import { Logger, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import * as mqtt from 'mqtt';
-import { MeasurementsArrivedEvent } from '@skynjari/interfaces';
+import { MeasurementsArrivedEvent } from '@skynjari/data-model';
 import MqttBroker from './mqtt-broker.interface';
 
 @Injectable()

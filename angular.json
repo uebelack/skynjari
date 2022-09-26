@@ -4,6 +4,6 @@
   "projects": {
     "backend": "apps/backend",
     "frontend": "apps/frontend",
-    "interfaces": "libs/interfaces"
+    "data-model": "libs/data-model"
   }
 }

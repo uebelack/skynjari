@@ -2,7 +2,7 @@ import { WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 
 import { OnEvent } from '@nestjs/event-emitter';
 
-import { MeasurementsArrivedEvent } from '@skynjari/interfaces';
+import { MeasurementsArrivedEvent } from '@skynjari/data-model';
 
 @WebSocketGateway({ cors: true })
 class AppGateway {
