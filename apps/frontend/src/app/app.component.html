@@ -1,3 +1,8 @@
-<router-outlet>
-  <skynjari-sensor-list [sensors]="sensors$ | async"></skynjari-sensor-list>
-</router-outlet>
+<div class="flex justify-center">
+  <div class="p-3 w-full max-w-md">
+    <h1 class="text-2xl mb-3 text-base-content">Skynjari</h1>
+    <router-outlet>
+      <skynjari-sensors-list [sensors]="sensors$ | async"></skynjari-sensors-list>
+    </router-outlet>
+  </div>
+</div>

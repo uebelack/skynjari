@@ -3,7 +3,8 @@
   "version": 2,
   "projects": {
     "backend": "apps/backend",
+    "data-model": "libs/data-model",
     "frontend": "apps/frontend",
-    "data-model": "libs/data-model"
+    "ui": "libs/ui"
   }
 }

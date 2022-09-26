@@ -6,21 +6,22 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 
+import { UiModule } from '@skynjari/ui';
 import AppComponent from './app.component';
 import sensorsReducer from './sensors/sensors.reducer';
 import SensorsService from './sensors/sensors.service';
-import SensorListComponent from './sensor-list/sensor-list.component';
 
 const config: SocketIoConfig = { url: window.location.origin, options: {} };
 
 @NgModule({
-  declarations: [AppComponent, SensorListComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
     StoreModule.forRoot({ sensors: sensorsReducer }),
     SocketIoModule.forRoot(config),
     RouterModule.forRoot([], { initialNavigation: 'enabledBlocking' }),
+    UiModule,
   ],
   providers: [SensorsService],
   bootstrap: [AppComponent],
