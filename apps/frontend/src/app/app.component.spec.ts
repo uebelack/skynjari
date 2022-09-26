@@ -1,26 +1,34 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MockComponent } from 'ng-mocks';
+import { MockComponent, MockProvider } from 'ng-mocks';
+import { Store } from '@ngrx/store';
 import AppComponent from './app.component';
 import SensorListComponent from './sensor-list/sensor-list.component';
+import SensorsService from './sensors/sensors.service';
 
 describe('AppComponent', () => {
+  let fixture: ComponentFixture<AppComponent>;
+  let app: AppComponent;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule],
-      declarations: [AppComponent, MockComponent(SensorListComponent)],
+      declarations: [
+        AppComponent,
+        MockComponent(SensorListComponent),
+      ],
+      providers: [
+        MockProvider(SensorsService, { getSensors: () => of([]) }),
+        MockProvider(Store),
+      ],
     }).compileComponents();
+
+    fixture = TestBed.createComponent(AppComponent);
+    app = fixture.componentInstance;
+    fixture.detectChanges();
   });
 
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
     expect(app).toBeTruthy();
-  });
-
-  it('should have as title \'web\'', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('Skynjari');
   });
 });

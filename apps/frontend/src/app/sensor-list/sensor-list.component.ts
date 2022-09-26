@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, Input } from '@angular/core';
 import { Sensor } from '@skynjari/interfaces';
 
 @Component({
@@ -7,21 +6,8 @@ import { Sensor } from '@skynjari/interfaces';
   templateUrl: './sensor-list.component.html',
   styleUrls: ['./sensor-list.component.scss'],
 })
-class SensorListComponent implements OnInit {
-  sensors: Sensor[] = [];
-
-  constructor(private http: HttpClient) {}
-
-  fetch() {
-    this.http.get<Sensor[]>('/api/v1/sensors')
-      .subscribe((t) => {
-        this.sensors = t;
-      });
-  }
-
-  ngOnInit(): void {
-    this.fetch();
-  }
+class SensorListComponent {
+  @Input() sensors: ReadonlyArray<Sensor> | null = [];
 }
 
 export default SensorListComponent;

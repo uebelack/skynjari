@@ -1,6 +1,3 @@
-import { resolve } from 'path';
-import { readFileSync } from 'fs';
-import * as yaml from 'js-yaml';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigService } from '@nestjs/config';
 import { EventEmitterModule, EventEmitter2 } from '@nestjs/event-emitter';
@@ -8,7 +5,7 @@ import { Logger } from '@nestjs/common';
 import { connect } from 'mqtt';
 import MqttService from './mqtt.service';
 import MqttModule from './mqtt.module';
-import MqttBroker from './mqtt-broker.interface';
+import mqttConfig from './mqtt.config.fixture';
 
 jest.mock('mqtt', () => ({ connect: jest.fn() }));
 
@@ -17,8 +14,7 @@ describe('MqttService', () => {
   const client = { on: jest.fn(), subscribe: jest.fn() };
 
   const createService = async () => {
-    const config = yaml.load(readFileSync(resolve(__dirname, '__fixtures__', 'mqtt.yaml'), 'utf8')) as { brokers: MqttBroker };
-    jest.spyOn(ConfigService.prototype, 'get').mockReturnValue(config.brokers);
+    jest.spyOn(ConfigService.prototype, 'get').mockReturnValue(mqttConfig.brokers);
 
     const module: TestingModule = await Test.createTestingModule({
       imports: [MqttModule, EventEmitterModule.forRoot()],

@@ -1,9 +1,7 @@
 import { ConfigService } from '@nestjs/config';
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
-import { Sensor, SensorType } from '@skynjari/interfaces';
+import { SensorType } from '@skynjari/interfaces';
 import { Test, TestingModule } from '@nestjs/testing';
-import * as yaml from 'js-yaml';
+import sensorConfig from './sensors.config.fixture';
 
 import SensorsService from './sensors.service';
 import MeasurementsArrivedEvent from '../measurements/measurements.arrived.event';
@@ -12,8 +10,7 @@ describe('SensorsService', () => {
   let service: SensorsService;
 
   beforeEach(async () => {
-    const config = yaml.load(readFileSync(resolve(__dirname, '__fixtures__', 'sensors.yaml'), 'utf8')) as { sensors: Sensor[] };
-    jest.spyOn(ConfigService.prototype, 'get').mockReturnValue(config.sensors);
+    jest.spyOn(ConfigService.prototype, 'get').mockReturnValue(sensorConfig.sensors);
     const module: TestingModule = await Test.createTestingModule({
       providers: [SensorsService, ConfigService],
     }).compile();

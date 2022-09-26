@@ -3,8 +3,11 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
-import AppComponent from './app.component';
+import { StoreModule } from '@ngrx/store';
 
+import AppComponent from './app.component';
+import sensorsReducer from './sensors/sensors.reducer';
+import SensorsService from './sensors/sensors.service';
 import SensorListComponent from './sensor-list/sensor-list.component';
 
 @NgModule({
@@ -12,9 +15,10 @@ import SensorListComponent from './sensor-list/sensor-list.component';
   imports: [
     BrowserModule,
     HttpClientModule,
+    StoreModule.forRoot({ sensors: sensorsReducer }),
     RouterModule.forRoot([], { initialNavigation: 'enabledBlocking' }),
   ],
-  providers: [],
+  providers: [SensorsService],
   bootstrap: [AppComponent],
 })
 class AppModule {}
