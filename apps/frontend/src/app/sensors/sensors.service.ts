@@ -4,18 +4,22 @@ import { Store } from '@ngrx/store';
 import { Socket } from 'ngx-socket-io';
 import { Sensor, MeasurementsArrivedEvent } from '@skynjari/data-model';
 import sensorsUpdated from './sensors.actions';
+import selectSensors from './sensors.selector';
 
 @Injectable({
   providedIn: 'root',
 })
 class SensorsService {
-  sensors: Sensor[] = [];
+  sensors: readonly Sensor[] = [];
 
   constructor(private http: HttpClient, private socket: Socket, private store: Store) {}
 
   init() {
-    this.http.get<Sensor[]>('/api/v1/sensors').subscribe((sensors) => {
+    this.store.select(selectSensors).subscribe((sensors) => {
       this.sensors = sensors;
+    });
+
+    this.http.get<Sensor[]>('/api/v1/sensors').subscribe((sensors) => {
       this.store.dispatch(sensorsUpdated({ sensors }));
       this.socket.fromEvent('measurements').subscribe((payload) => {
         const event = JSON.parse(payload as string) as MeasurementsArrivedEvent;

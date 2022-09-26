@@ -12,7 +12,7 @@ import SensorsService from './sensors.service';
 describe('SensorsService', () => {
   let httpTestingController: HttpTestingController;
   let service: SensorsService;
-  const store = { dispatch: jest.fn() };
+  const store = { dispatch: jest.fn(), select: jest.fn() };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -38,9 +38,11 @@ describe('SensorsService', () => {
   });
 
   it('should load sensors on init and handle measurement updates via websocket', () => {
-    expect(service.sensors).toEqual([]);
+    store.select.mockImplementation(() => ({ subscribe: (callback: Function) => callback(sensors) }));
+
     service.init();
     httpTestingController.expectOne('/api/v1/sensors').flush(sensors);
+
     expect(store.dispatch).toBeCalledWith({ sensors, type: '[Sensors] updated' });
     expect(store.dispatch.mock.calls[1][0].sensors[0].measurements.consumption.value).toEqual(123.33);
   });

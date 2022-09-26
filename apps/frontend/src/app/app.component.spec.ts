@@ -2,8 +2,8 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockComponent, MockProvider } from 'ng-mocks';
 import { Store } from '@ngrx/store';
+import { SensorsListComponent } from '@skynjari/ui';
 import AppComponent from './app.component';
-import SensorListComponent from './sensor-list/sensor-list.component';
 import SensorsService from './sensors/sensors.service';
 
 describe('AppComponent', () => {
@@ -14,7 +14,7 @@ describe('AppComponent', () => {
       imports: [RouterTestingModule],
       declarations: [
         AppComponent,
-        MockComponent(SensorListComponent),
+        MockComponent(SensorsListComponent),
       ],
       providers: [
         MockProvider(SensorsService),
