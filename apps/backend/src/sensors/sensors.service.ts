@@ -1,9 +1,7 @@
 import { ConfigService } from '@nestjs/config';
 import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
-import { Sensor } from '@skynjari/interfaces';
-
-import MeasurementsArrivedEvent from '../measurements/measurements.arrived.event';
+import { Sensor, MeasurementsArrivedEvent } from '@skynjari/interfaces';
 
 @Injectable()
 class SensorsService {

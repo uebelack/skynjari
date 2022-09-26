@@ -1,3 +1,9 @@
 <ul *ngFor="let sensor of sensors">
-  <li>{{ sensor.name }}</li>
+  <li>{{ sensor.name }}
+    <ul>
+      <li *ngFor="let item of sensor.measurements | keyvalue">
+        {{ item.value.name }}: {{ item.value.value }}
+      </li>
+    </ul>
+  </li>
 </ul>

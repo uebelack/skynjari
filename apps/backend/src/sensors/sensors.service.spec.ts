@@ -1,10 +1,9 @@
 import { ConfigService } from '@nestjs/config';
-import { SensorType } from '@skynjari/interfaces';
+import { SensorType, MeasurementsArrivedEvent } from '@skynjari/interfaces';
 import { Test, TestingModule } from '@nestjs/testing';
 import sensorConfig from './sensors.config.fixture';
 
 import SensorsService from './sensors.service';
-import MeasurementsArrivedEvent from '../measurements/measurements.arrived.event';
 
 describe('SensorsService', () => {
   let service: SensorsService;
@@ -46,12 +45,13 @@ describe('SensorsService', () => {
         },
       },
     });
-    const event = new MeasurementsArrivedEvent();
-    event.sensorKey = 'power-meter';
-    event.measurements = {
-      consumption: 342.32,
-      totalizer: 123456.78,
-    };
+    const event = new MeasurementsArrivedEvent(
+      'power-meter',
+      {
+        consumption: 342.32,
+        totalizer: 123456.78,
+      },
+    );
 
     await service.handleMeasurementsArrivedEvent(event);
 

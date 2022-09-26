@@ -1,16 +1,35 @@
-import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Sensor } from '@skynjari/interfaces';
+import { Store } from '@ngrx/store';
+import { Socket } from 'ngx-socket-io';
+import { Sensor, MeasurementsArrivedEvent } from '@skynjari/interfaces';
+import sensorsRetrieved from './sensors.actions';
 
 @Injectable({
   providedIn: 'root',
 })
 class SensorsService {
-  constructor(private http: HttpClient) {}
+  sensors: Sensor[] = [];
 
-  getSensors(): Observable<Array<Sensor>> {
-    return this.http.get<Sensor[]>('/api/v1/sensors');
+  constructor(private http: HttpClient, private socket: Socket, private store: Store) {}
+
+  init() {
+    this.socket.fromEvent('measurements').subscribe((payload) => {
+      const event = JSON.parse(payload as string) as MeasurementsArrivedEvent;
+      const nextSensors = JSON.parse(JSON.stringify(this.sensors)) as Sensor[];
+      const sensor = nextSensors.find((s) => s.key === event.sensorKey);
+      if (sensor && sensor.measurements) {
+        Object.keys(sensor.measurements).forEach((key) => {
+          sensor.measurements[key].value = event.measurements[key];
+        });
+      }
+      this.store.dispatch(sensorsRetrieved({ sensors: nextSensors }));
+    });
+
+    this.http.get<Sensor[]>('/api/v1/sensors').subscribe((sensors) => {
+      this.sensors = sensors;
+      this.store.dispatch(sensorsRetrieved({ sensors }));
+    });
   }
 }
 

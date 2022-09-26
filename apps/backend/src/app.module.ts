@@ -3,11 +3,9 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 
-import AppController from './app.controller';
-import AppService from './app.service';
-
-import SensorModule from '../sensors/sensors.module';
-import MqttModule from '../mqtt/mqtt.module';
+import SensorModule from './sensors/sensors.module';
+import MqttModule from './mqtt/mqtt.module';
+import AppGateway from './app.gateway';
 
 @Module({
   imports: [
@@ -17,9 +15,8 @@ import MqttModule from '../mqtt/mqtt.module';
     EventEmitterModule.forRoot(),
     SensorModule,
     MqttModule,
+    AppGateway,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 class AppModule {}
 

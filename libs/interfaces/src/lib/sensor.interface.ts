@@ -3,9 +3,9 @@ import Measurement from './measurement.interface';
 
 interface Sensor {
   key: string
-  name?: string
+  name: string
   type: SensorType
-  measurements?: Record<string, Measurement>
+  measurements: Record<string, Measurement>
 }
 
 export default Sensor;

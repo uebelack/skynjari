@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import SensorsService from './sensors/sensors.service';
-import sensorsRetrieved from './sensors/sensors.actions';
 import selectSensors from './sensors/sensors.selector';
 
 @Component({
@@ -16,9 +15,7 @@ class AppComponent implements OnInit {
   constructor(private sensorsService: SensorsService, private store: Store) {}
 
   ngOnInit() {
-    this.sensorsService
-      .getSensors()
-      .subscribe((sensors) => this.store.dispatch(sensorsRetrieved({ sensors })));
+    this.sensorsService.init();
   }
 }
 

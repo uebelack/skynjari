@@ -1,9 +1,7 @@
 class MeasurementsArrivedEvent {
   public static KEY: string = 'measurements.arrived';
 
-  sensorKey: string;
-
-  measurements: Record<string, number>;
+  constructor(public sensorKey: string, public measurements: Record<string, number>) {}
 }
 
 export default MeasurementsArrivedEvent;
