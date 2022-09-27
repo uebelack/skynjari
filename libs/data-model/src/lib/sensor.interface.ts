@@ -5,6 +5,7 @@ interface Sensor {
   key: string
   name: string
   type: SensorType
+  updated: Date
   measurements: Record<string, Measurement>
 }
 
