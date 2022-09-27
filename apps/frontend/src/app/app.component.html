@@ -1,10 +1,6 @@
 <div class="flex flex-col items-center">
-  <div class="w-full bg-secondary shadow-md text-secondary-content">
-    <div class="p-3 w-full max-w-md">
-      <h1 class="text-2xl text-base-300-content ml-2">Skynjari</h1>
-    </div>
-  </div>
   <div class="p-3 w-full max-w-md">
+    <h1 class="text-2xl text-base-300-content ml-3 mb-3">Skynjari</h1>
     <router-outlet>
       <skynjari-sensors-list [sensors]="sensors$ | async"></skynjari-sensors-list>
     </router-outlet>
