@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
@@ -10,6 +10,7 @@ import { UiModule } from '@skynjari/ui';
 import AppComponent from './app.component';
 import sensorsReducer from './sensors/sensors.reducer';
 import SensorsService from './sensors/sensors.service';
+import LocaleService from './locale.service';
 
 const config: SocketIoConfig = { url: window.location.origin, options: {} };
 
@@ -23,7 +24,7 @@ const config: SocketIoConfig = { url: window.location.origin, options: {} };
     RouterModule.forRoot([], { initialNavigation: 'enabledBlocking' }),
     UiModule,
   ],
-  providers: [SensorsService],
+  providers: [SensorsService, { provide: LOCALE_ID, useValue: LocaleService.locale() }],
   bootstrap: [AppComponent],
 })
 class AppModule {}

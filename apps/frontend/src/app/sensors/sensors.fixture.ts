@@ -34,7 +34,7 @@ const sensors: Sensor[] = [
   {
     key: 'thermo-meter-living',
     name: 'Thermometer Living',
-    type: SensorType.Thermometer,
+    type: SensorType.ThermoMeter,
     measurements: {
       temperature: {
         name: 'Temperature',
