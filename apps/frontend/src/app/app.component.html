@@ -1,8 +1,12 @@
 <div class="flex justify-center">
   <div class="p-3 w-full max-w-md">
-    <h1 class="text-2xl mb-3 text-secondary-content ml-2">Skynjari</h1>
+    <h1 class="text-2xl mb-3 text-base-300-content ml-2">Skynjari</h1>
     <router-outlet>
       <skynjari-sensors-list [sensors]="sensors$ | async"></skynjari-sensors-list>
     </router-outlet>
   </div>
+</div>
+
+<div style="border: 1px solid; width: 520px; height: 520px;" class="flex justify-center items-center text-secondary">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" style="width: 400px; height: 400px;" fill="currentColor"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M160 80c0-26.5 21.5-48 48-48h32c26.5 0 48 21.5 48 48V432c0 26.5-21.5 48-48 48H208c-26.5 0-48-21.5-48-48V80zM0 272c0-26.5 21.5-48 48-48H80c26.5 0 48 21.5 48 48V432c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V272zM368 96h32c26.5 0 48 21.5 48 48V432c0 26.5-21.5 48-48 48H368c-26.5 0-48-21.5-48-48V144c0-26.5 21.5-48 48-48z"/></svg>
 </div>
