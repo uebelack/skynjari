@@ -1,7 +1,7 @@
 enum SensorType {
   PowerMeter = 'power-meter',
   WaterMeter = 'water-meter',
-  ThermoMeter = 'thermo-meter',
+  Thermometer = 'thermometer',
 }
 
 export default SensorType;

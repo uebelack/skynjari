@@ -8,4 +8,4 @@ export { default as SensorsListItemPowerMeterComponent } from './lib/sensors-lis
 
 export { default as SensorsListItemWaterMeterComponent } from './lib/sensors-list-item-water-meter/sensors-list-item-water-meter.component';
 
-export { default as SensorsListItemThermoMeterComponent } from './lib/sensors-list-item-thermo-meter/sensors-list-item-thermo-meter.component';
+export { default as SensorsListItemThermometerComponent } from './lib/sensors-list-item-thermometer/sensors-list-item-thermometer.component';

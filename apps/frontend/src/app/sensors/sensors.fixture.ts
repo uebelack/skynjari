@@ -32,9 +32,9 @@ const sensors: Sensor[] = [
     },
   },
   {
-    key: 'thermo-meter-living',
+    key: 'thermometer-living',
     name: 'Thermometer Living',
-    type: SensorType.ThermoMeter,
+    type: SensorType.Thermometer,
     measurements: {
       temperature: {
         name: 'Temperature',

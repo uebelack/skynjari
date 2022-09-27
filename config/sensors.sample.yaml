@@ -19,9 +19,9 @@ sensors:
       totalizer:
         name: Totalizer
         unit: L
-  - key: thermo-meter-living
+  - key: thermometer-living
     name: Thermometer Living
-    type: thermo-meter
+    type: thermometer
     measurements:
       temperature:
         name: Temperature

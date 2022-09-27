@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SensorType } from '@skynjari/data-model';
-import SensorsListItemThermoMeterComponent from './sensors-list-item-thermo-meter.component';
+import SensorsListItemThermometerComponent from './sensors-list-item-thermometer.component';
 
-describe('SensorsListItemThermoMeterComponent', () => {
-  let component: SensorsListItemThermoMeterComponent;
-  let fixture: ComponentFixture<SensorsListItemThermoMeterComponent>;
+describe('SensorsListItemThermometerComponent', () => {
+  let component: SensorsListItemThermometerComponent;
+  let fixture: ComponentFixture<SensorsListItemThermometerComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SensorsListItemThermoMeterComponent],
+      declarations: [SensorsListItemThermometerComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SensorsListItemThermoMeterComponent);
+    fixture = TestBed.createComponent(SensorsListItemThermometerComponent);
     component = fixture.componentInstance;
     component.sensor = {
       name: 'Test',
