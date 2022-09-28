@@ -1,4 +1,4 @@
-import { Injectable, HostListener } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { Socket } from 'ngx-socket-io';
@@ -46,11 +46,6 @@ class SensorsService {
           callback();
         }
       });
-  }
-
-  @HostListener('document:visibilitychange', ['$event'])
-  visibilitychange() {
-    this.refresh();
   }
 }
 

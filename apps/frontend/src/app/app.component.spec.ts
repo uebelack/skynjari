@@ -9,7 +9,10 @@ import SensorsService from './sensors/sensors.service';
 describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;
   let app: AppComponent;
+  let sensorsService: SensorsService;
+
   beforeEach(async () => {
+    sensorsService = { refresh: jest.fn() } as unknown as SensorsService;
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule],
       declarations: [
@@ -17,7 +20,7 @@ describe('AppComponent', () => {
         MockComponent(SensorsListComponent),
       ],
       providers: [
-        MockProvider(SensorsService),
+        MockProvider(SensorsService, sensorsService),
         MockProvider(Store),
       ],
     }).compileComponents();
@@ -29,5 +32,10 @@ describe('AppComponent', () => {
 
   it('should create the app', () => {
     expect(app).toBeTruthy();
+  });
+
+  it('should refresh sensors', () => {
+    app.refresh();
+    expect(sensorsService.refresh).toBeCalled();
   });
 });

@@ -52,7 +52,7 @@ describe('SensorsService', () => {
   });
 
   it('should refresh sensors', () => {
-    service.visibilitychange();
+    service.refresh();
     httpTestingController.expectOne('/api/v1/sensors').flush(sensors);
   });
 });

@@ -3441,6 +3441,13 @@ ajv@^6.10.0, ajv@^6.12.4, ajv@^6.12.5:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
+angular-page-visibility@^11.0.0:
+  version "11.0.0"
+  resolved "https://registry.yarnpkg.com/angular-page-visibility/-/angular-page-visibility-11.0.0.tgz#8822e4a639c84dd82a3a386b2f77159d58877dfd"
+  integrity sha512-GdAuCjeDG/fhIKt6EEVSi8o6c4hxuamejhETnJRwNBJZrPU5I8DIYYXYkvkJ4xy2umNl1ihem+33d1eApfVMkA==
+  dependencies:
+    tslib "^2.0.0"
+
 ansi-colors@4.1.3, ansi-colors@^4.1.1:
   version "4.1.3"
   resolved "https://registry.yarnpkg.com/ansi-colors/-/ansi-colors-4.1.3.tgz#37611340eb2243e70cc604cad35d63270d48781b"

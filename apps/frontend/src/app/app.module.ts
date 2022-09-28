@@ -1,7 +1,7 @@
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-
+import { AngularPageVisibilityModule } from 'angular-page-visibility';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
@@ -19,6 +19,7 @@ const config: SocketIoConfig = { url: window.location.origin, options: {} };
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    AngularPageVisibilityModule,
     BrowserModule,
     HttpClientModule,
     StoreModule.forRoot({ sensors: sensorsReducer }),
