@@ -31,7 +31,7 @@ class MqttService {
       });
 
       client.on('message', (topic, message) => {
-        const event = new MeasurementsArrivedEvent(topic.split('/').pop(), JSON.parse(message.toString()));
+        const event = new MeasurementsArrivedEvent(topic.split('/').pop(), new Date(), JSON.parse(message.toString()));
         Object.keys(event.measurements).forEach((key) => {
           event.measurements[key] = parseFloat(event.measurements[key].toString());
         });

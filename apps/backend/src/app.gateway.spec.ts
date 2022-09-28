@@ -21,8 +21,9 @@ describe('AppGateway', () => {
     gateway.server = {
       emit: jest.fn(),
     };
-    const event = new MeasurementsArrivedEvent('test', { test: 123.33 });
+    const timestamp = new Date();
+    const event = new MeasurementsArrivedEvent('test', timestamp, { test: 123.33 });
     gateway.handleMeasurementsArrivedEvent(event);
-    expect(gateway.server.emit).toHaveBeenCalledWith('measurements', JSON.stringify({ sensorKey: 'test', measurements: { test: 123.33 } }));
+    expect(gateway.server.emit).toHaveBeenCalledWith('measurements', JSON.stringify({ sensorKey: 'test', timestamp, measurements: { test: 123.33 } }));
   });
 });

@@ -23,7 +23,7 @@ class SensorsService {
   async handleMeasurementsArrivedEvent(event: MeasurementsArrivedEvent) {
     const sensor = await this.findByKey(event.sensorKey);
     if (sensor && sensor.measurements) {
-      sensor.updated = new Date();
+      sensor.updated = new Date(event.timestamp);
       Object.keys(sensor.measurements).forEach((key) => {
         sensor.measurements[key].value = event.measurements[key];
       });

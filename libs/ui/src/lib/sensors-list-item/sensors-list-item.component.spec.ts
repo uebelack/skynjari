@@ -3,6 +3,7 @@ import { SensorType } from '@skynjari/data-model';
 import { MockComponent } from 'ng-mocks';
 import SensorsListItemComponent from './sensors-list-item.component';
 import SensorsListItemPowerMeterComponent from '../sensors-list-item-power-meter/sensors-list-item-power-meter.component';
+import TimeagoPipe from '../timeago.pipe';
 
 describe('SensorsListItemComponent', () => {
   let component: SensorsListItemComponent;
@@ -10,7 +11,7 @@ describe('SensorsListItemComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SensorsListItemComponent, MockComponent(SensorsListItemPowerMeterComponent)],
+      declarations: [SensorsListItemComponent, MockComponent(SensorsListItemPowerMeterComponent), TimeagoPipe],
     }).compileComponents();
 
     fixture = TestBed.createComponent(SensorsListItemComponent);

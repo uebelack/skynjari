@@ -6,6 +6,8 @@ import SensorsListItemPowerMeterComponent from './sensors-list-item-power-meter/
 import SensorsListItemWaterMeterComponent from './sensors-list-item-water-meter/sensors-list-item-water-meter.component';
 import SensorsListItemThermometerComponent from './sensors-list-item-thermometer/sensors-list-item-thermometer.component';
 
+import TimeagoPipe from './timeago.pipe';
+
 @NgModule({
   imports: [CommonModule],
   declarations: [
@@ -14,6 +16,7 @@ import SensorsListItemThermometerComponent from './sensors-list-item-thermometer
     SensorsListItemPowerMeterComponent,
     SensorsListItemWaterMeterComponent,
     SensorsListItemThermometerComponent,
+    TimeagoPipe,
   ],
   exports: [
     SensorsListComponent,

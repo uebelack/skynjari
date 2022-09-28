@@ -45,8 +45,12 @@ describe('SensorsService', () => {
         },
       },
     });
+
+    const timestamp = new Date();
+
     const event = new MeasurementsArrivedEvent(
       'power-meter',
+      timestamp,
       {
         consumption: 342.32,
         totalizer: 123456.78,
@@ -59,6 +63,7 @@ describe('SensorsService', () => {
       key: 'power-meter',
       name: 'Power',
       type: SensorType.PowerMeter,
+      updated: timestamp,
       measurements: {
         consumption: {
           name: 'Consumption',

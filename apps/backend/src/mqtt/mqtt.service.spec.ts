@@ -54,6 +54,10 @@ describe('MqttService', () => {
 
   it('should emit new measurements as events', async () => {
     (connect as jest.Mock).mockImplementation(() => client);
+
+    const mockDate = new Date(1466424490000);
+    jest.spyOn(global, 'Date').mockImplementation(() => mockDate as undefined);
+
     const payload = JSON.stringify({
       consumption: 1323.3,
       totalizer: 23432.32,
@@ -62,6 +66,7 @@ describe('MqttService', () => {
     await createService();
     expect(eventEmitter.emit).toBeCalledWith('measurements.arrived', {
       sensorKey: 'power_meter',
+      timestamp: mockDate,
       measurements: {
         consumption: 1323.3,
         totalizer: 23432.32,

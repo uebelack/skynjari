@@ -23,6 +23,7 @@ describe('SensorsService', () => {
         MockProvider(Socket, ({
           fromEvent: () => of(JSON.stringify({
             sensorKey: 'power-meter',
+            timestamp: new Date('2021-01-01T00:00:00.000Z'),
             measurements: { consumption: 123.33 },
           })),
         } as unknown as Socket)),
@@ -44,6 +45,9 @@ describe('SensorsService', () => {
     httpTestingController.expectOne('/api/v1/sensors').flush(sensors);
 
     expect(store.dispatch).toBeCalledWith({ sensors, type: '[Sensors] updated' });
+    expect(store.dispatch.mock.calls[0][0].sensors[0].updated).toEqual(new Date('2021-01-01T00:00:00.000Z'));
+
     expect(store.dispatch.mock.calls[1][0].sensors[0].measurements.consumption.value).toEqual(123.33);
+    expect(store.dispatch.mock.calls[1][0].sensors[0].updated).toEqual(new Date('2021-01-01T00:00:00.000Z'));
   });
 });
