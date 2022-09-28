@@ -2,6 +2,8 @@
     "name": "Skynjari",
     "start_url": "/",
     "display": "standalone",
+    "theme_color": "#E5E6E6",
+    "background_color": "#E5E6E6",
     "icons": [
         {
             "src": "/assets/android-chrome-192x192.png",

@@ -50,4 +50,9 @@ describe('SensorsService', () => {
     expect(store.dispatch.mock.calls[1][0].sensors[0].measurements.consumption.value).toEqual(123.33);
     expect(store.dispatch.mock.calls[1][0].sensors[0].updated).toEqual(new Date('2021-01-01T00:00:00.000Z'));
   });
+
+  it('should refresh sensors', () => {
+    service.visibilitychange();
+    httpTestingController.expectOne('/api/v1/sensors').flush(sensors);
+  });
 });

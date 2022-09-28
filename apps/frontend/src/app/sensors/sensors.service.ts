@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, HostListener } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { Socket } from 'ngx-socket-io';
@@ -20,24 +20,37 @@ class SensorsService {
       this.sensors = sensors;
     });
 
+    this.refresh(() => {
+      this.socket.fromEvent('measurements').subscribe((payload) => {
+        const event = JSON.parse(payload as string) as MeasurementsArrivedEvent;
+        const nextSensors = JSON.parse(JSON.stringify(this.sensors))
+          .map((sensor: Sensor) => ({ ...sensor, updated: sensor.updated && new Date(sensor.updated as unknown as string) })) as Sensor[];
+        const sensor = nextSensors.find((s) => s.key === event.sensorKey);
+        if (sensor && sensor.measurements) {
+          sensor.updated = new Date(event.timestamp);
+          Object.keys(sensor.measurements).forEach((key) => {
+            sensor.measurements[key].value = event.measurements[key];
+          });
+        }
+        this.store.dispatch(sensorsUpdated({ sensors: nextSensors }));
+      });
+    });
+  }
+
+  refresh(callback: Function | undefined = undefined) {
     this.http.get<Sensor[]>('/api/v1/sensors')
       .pipe(map((sensors) => sensors.map((sensor) => ({ ...sensor, updated: sensor.updated && new Date(sensor.updated) }))))
       .subscribe((sensors) => {
         this.store.dispatch(sensorsUpdated({ sensors }));
-        this.socket.fromEvent('measurements').subscribe((payload) => {
-          const event = JSON.parse(payload as string) as MeasurementsArrivedEvent;
-          const nextSensors = JSON.parse(JSON.stringify(this.sensors))
-            .map((sensor: Sensor) => ({ ...sensor, updated: sensor.updated && new Date(sensor.updated as unknown as string) })) as Sensor[];
-          const sensor = nextSensors.find((s) => s.key === event.sensorKey);
-          if (sensor && sensor.measurements) {
-            sensor.updated = new Date(event.timestamp);
-            Object.keys(sensor.measurements).forEach((key) => {
-              sensor.measurements[key].value = event.measurements[key];
-            });
-          }
-          this.store.dispatch(sensorsUpdated({ sensors: nextSensors }));
-        });
+        if (callback) {
+          callback();
+        }
       });
+  }
+
+  @HostListener('document:visibilitychange', ['$event'])
+  visibilitychange() {
+    this.refresh();
   }
 }
 

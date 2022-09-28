@@ -290,10 +290,26 @@
   dependencies:
     tslib "^2.3.0"
 
+"@angular/pwa@^14.2.3":
+  version "14.2.3"
+  resolved "https://registry.yarnpkg.com/@angular/pwa/-/pwa-14.2.3.tgz#4a1f1f8a7f105531b548beb8a5bc947287d6995b"
+  integrity sha512-Aq7maLxqirVkA9kF7W1/K7pKKNiWqj1z+cYa8Do5A/fR6u0f/YoiWpBMiwcZ/8/sICWetUPayThgkCzCBZ7f7g==
+  dependencies:
+    "@angular-devkit/schematics" "14.2.3"
+    "@schematics/angular" "14.2.3"
+    parse5-html-rewriting-stream "6.0.1"
+
 "@angular/router@~14.2.0":
   version "14.2.2"
   resolved "https://registry.yarnpkg.com/@angular/router/-/router-14.2.2.tgz#021105bcba5038d96606df94503c64d6b1ace6af"
   integrity sha512-BRkXdAVK0rE/x6im91a/fdIcWhPILO6ZmwCVTEdvsRyI9arQSlXAnupPUeumdbSc6mG/FCXPcyJq/dU0Jl70Og==
+  dependencies:
+    tslib "^2.3.0"
+
+"@angular/service-worker@~14.2.0":
+  version "14.2.3"
+  resolved "https://registry.yarnpkg.com/@angular/service-worker/-/service-worker-14.2.3.tgz#31eae466667cd44ba4372d7059ac87be3ea493d4"
+  integrity sha512-7Cj0cGVY8ru3xnM9B57KDKLoUi3fZU0aLhKuhVZ76tbzx8uCuJvYxr6KNX5t22nMAbhc9UBC5j9+N4hesZLpAw==
   dependencies:
     tslib "^2.3.0"
 
