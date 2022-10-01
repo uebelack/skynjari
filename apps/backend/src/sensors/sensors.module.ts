@@ -4,6 +4,7 @@ import { Module } from '@nestjs/common';
 import sensorsConfig from './sensors.config';
 import SensorsController from './sensors.controller';
 import SensorsService from './sensors.service';
+import SensorsResolver from './sensors.resolver';
 
 @Module({
   imports: [
@@ -12,7 +13,7 @@ import SensorsService from './sensors.service';
     }),
   ],
   controllers: [SensorsController],
-  providers: [SensorsService, ConfigService],
+  providers: [SensorsService, ConfigService, SensorsResolver],
 })
 class SensorsModule {}
 
