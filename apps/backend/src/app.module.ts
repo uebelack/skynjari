@@ -6,22 +6,20 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import SensorModule from './sensors/sensors.module';
 import MqttModule from './mqtt/mqtt.module';
-import AppGateway from './app.gateway';
 
 @Module({
   imports: [
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'frontend'),
-    }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       sortSchema: true,
     }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'frontend'),
+    }),
     EventEmitterModule.forRoot(),
     SensorModule,
     MqttModule,
-    AppGateway,
   ],
 })
 class AppModule {}

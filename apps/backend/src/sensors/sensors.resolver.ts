@@ -1,9 +1,10 @@
+/* eslint-disable arrow-parens */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { NotFoundException } from '@nestjs/common';
 import {
   Args, Query, Resolver,
 } from '@nestjs/graphql';
-import { Sensor } from '@skynjari/data-model';
+import Sensor from './sensor.type';
 import SensorService from './sensors.service';
 
 @Resolver(of => Sensor)

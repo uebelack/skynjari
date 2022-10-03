@@ -29,8 +29,7 @@
       "files": ["*.ts", "*.tsx"],
       "extends": [
         "airbnb-base",
-        "airbnb-typescript/base",
-        "graphql"
+        "airbnb-typescript/base"
       ],
       "rules": {
         "class-methods-use-this": "off",

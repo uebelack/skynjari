@@ -7,6 +7,10 @@ import { Sensor } from '@skynjari/data-model';
 })
 class SensorsListItemPowerMeterComponent {
   @Input() sensor!: Sensor;
+
+  consumption() {
+    return this.sensor.measurements.find((measurement) => measurement.key === 'consumption');
+  }
 }
 
 export default SensorsListItemPowerMeterComponent;

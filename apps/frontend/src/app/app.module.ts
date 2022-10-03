@@ -13,7 +13,6 @@ import SensorsService from './sensors/sensors.service';
 import LocaleService from './locale.service';
 import environment from '../environments/environment';
 
-
 @NgModule({
   declarations: [AppComponent],
   imports: [

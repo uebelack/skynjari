@@ -7,6 +7,14 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+"""measurement"""
+type Measurement {
+  key: ID!
+  name: String!
+  unit: String!
+  value: Float
+}
+
 type Query {
   sensor(key: String!): Sensor!
   sensors: [Sensor!]!
@@ -15,5 +23,14 @@ type Query {
 """sensor"""
 type Sensor {
   key: ID!
+  measurements: [Measurement!]!
+  name: String!
+  type: SensorType!
   updated: DateTime
+}
+
+enum SensorType {
+  PowerMeter
+  Thermometer
+  WaterMeter
 }

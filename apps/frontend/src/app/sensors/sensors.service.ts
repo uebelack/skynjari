@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
-import { Sensor, MeasurementsArrivedEvent } from '@skynjari/data-model';
+import { Sensor } from '@skynjari/data-model';
 import sensorsUpdated from './sensors.actions';
 import selectSensors from './sensors.selector';
 

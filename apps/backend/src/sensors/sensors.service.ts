@@ -1,7 +1,8 @@
 import { ConfigService } from '@nestjs/config';
 import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
-import { Sensor, MeasurementsArrivedEvent } from '@skynjari/data-model';
+import { MeasurementsArrivedEvent } from '@skynjari/data-model';
+import Sensor from './sensor.type';
 
 @Injectable()
 class SensorsService {
@@ -24,8 +25,11 @@ class SensorsService {
     const sensor = await this.findByKey(event.sensorKey);
     if (sensor && sensor.measurements) {
       sensor.updated = new Date(event.timestamp);
-      Object.keys(sensor.measurements).forEach((key) => {
-        sensor.measurements[key].value = event.measurements[key];
+      Object.keys(event.measurements).forEach((key) => {
+        const measurement = sensor.measurements.find((m) => m.key === key);
+        if (measurement) {
+          measurement.value = event.measurements[key];
+        }
       });
     }
   }
