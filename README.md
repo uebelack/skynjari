@@ -10,7 +10,6 @@ This project was generated using [Nx](https://nx.dev).
 
 ## Quick Start & Documentation
 
-[Nx Documentation](https://nx.dev/angular)
 
 [10-minute video showing all Nx features](https://nx.dev/getting-started/intro)
 
