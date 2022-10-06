@@ -18,7 +18,10 @@ class SensorsService {
     this.store.select(selectSensors).subscribe((sensors) => {
       this.sensors = sensors;
     });
+    this.refresh();
+  }
 
+  refresh() {
     this.apollo.watchQuery({
       query: gql`
         {

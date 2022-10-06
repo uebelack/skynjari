@@ -33,4 +33,9 @@ describe('AppComponent', () => {
   it('should create the app', () => {
     expect(app).toBeTruthy();
   });
+
+  it('should refresh sensors', () => {
+    app.refresh();
+    expect(sensorsService.refresh).toBeCalled();
+  });
 });
