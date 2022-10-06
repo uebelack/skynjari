@@ -1,4 +1,4 @@
-<li class="w-full bg-base-100 mb-3 shadow-md rounded-box p-3 text-base-content">
+<div class="bg-base-100 shadow-md rounded-box p-3 text-base-content">
   <h2 class="text-lg text-secondary">{{ sensor.name }}</h2>
   <skynjari-sensors-list-item-power-meter 
     *ngIf="sensor.type === SensorType.POWER_METER"
@@ -13,4 +13,4 @@
     [sensor]="sensor">
   </skynjari-sensors-list-item-thermometer>
   <div class="flex w-full justify-end mt-2">{{ updated | timeago}}</div>
-</li>
+</div>
