@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Sensor } from '@skynjari/data-model';
+import { Sensor, Measurement } from '@skynjari/data-model';
 
 @Component({
   selector: 'skynjari-sensors-list-item-power-meter',
@@ -8,7 +8,7 @@ import { Sensor } from '@skynjari/data-model';
 class SensorsListItemPowerMeterComponent {
   @Input() sensor!: Sensor;
 
-  consumption() {
+  get consumption(): Measurement | undefined {
     return this.sensor.measurements.find((measurement) => measurement.key === 'consumption');
   }
 }

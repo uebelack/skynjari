@@ -1,14 +1,15 @@
 import { ConfigService } from '@nestjs/config';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { MeasurementsArrivedEvent } from '@skynjari/data-model';
+import { PubSub } from 'graphql-subscriptions';
 import Sensor from './sensor.type';
 
 @Injectable()
 class SensorsService {
   sensors: Sensor[] = [];
 
-  constructor(private configService: ConfigService) {
+  constructor(private configService: ConfigService, @Inject('PUB_SUB') private readonly pubSub: PubSub) {
     this.sensors = this.configService.get('sensors') || [];
   }
 
@@ -31,6 +32,7 @@ class SensorsService {
           measurement.value = event.measurements[key];
         }
       });
+      this.pubSub.publish('sensorUpdated', { sensorUpdated: sensor });
     }
   }
 }

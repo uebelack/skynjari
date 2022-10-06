@@ -30,7 +30,11 @@ type Sensor {
 }
 
 enum SensorType {
-  PowerMeter
-  Thermometer
-  WaterMeter
+  POWER_METER
+  THERMOMETER
+  WATER_METER
+}
+
+type Subscription {
+  sensorUpdated: Sensor!
 }

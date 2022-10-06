@@ -12,6 +12,7 @@ import sensorsReducer from './sensors/sensors.reducer';
 import SensorsService from './sensors/sensors.service';
 import LocaleService from './locale.service';
 import environment from '../environments/environment';
+import GraphQLModule from './graphql.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,6 +27,7 @@ import environment from '../environments/environment';
       enabled: environment.production,
       registrationStrategy: 'registerWhenStable:30000',
     }),
+    GraphQLModule,
   ],
   providers: [SensorsService, { provide: LOCALE_ID, useValue: LocaleService.locale() }],
   bootstrap: [AppComponent],

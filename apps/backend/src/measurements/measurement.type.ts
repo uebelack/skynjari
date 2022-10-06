@@ -7,7 +7,7 @@ import {
 
 @ObjectType({ description: 'measurement' })
 class Measurement {
-  @Field(type => ID)
+  @Field(/* istanbul ignore next */ type => ID)
     key!: string;
 
   @Field()

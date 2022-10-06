@@ -17,7 +17,7 @@ describe('SensorsListItemComponent', () => {
     fixture = TestBed.createComponent(SensorsListItemComponent);
     component = fixture.componentInstance;
     component.sensor = {
-      name: 'Test', key: 'test', type: SensorType.PowerMeter, measurements: {},
+      name: 'Test', key: 'test', type: SensorType.POWER_METER, measurements: [],
     };
     fixture.detectChanges();
   });

@@ -12,19 +12,19 @@ registerEnumType(SensorType, { name: 'SensorType' });
 
 @ObjectType({ description: 'sensor' })
 class Sensor {
-  @Field(type => ID)
+  @Field(/* istanbul ignore next */ type => ID)
     key!: string;
 
   @Field()
     name!: string;
 
-  @Field(type => SensorType)
+  @Field(/* istanbul ignore next */ type => SensorType)
     type!: SensorType;
 
   @Field({ nullable: true })
     updated?: Date;
 
-  @Field(type => [Measurement])
+  @Field(/* istanbul ignore next */ type => [Measurement])
     measurements!: Measurement[];
 }
 
