@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Sensor } from '@skynjari/data-model';
+import { Sensor, Measurement } from '@skynjari/data-model';
 
 @Component({
   selector: 'skynjari-sensors-list-item-thermometer',
@@ -7,6 +7,14 @@ import { Sensor } from '@skynjari/data-model';
 })
 class SensorsListItemThermometerComponent {
   @Input() sensor!: Sensor;
+
+  get humidity() : Measurement | undefined {
+    return this.sensor.measurements.find((measurement) => measurement.key === 'humidity');
+  }
+
+  get temperature() : Measurement | undefined {
+    return this.sensor.measurements.find((measurement) => measurement.key === 'temperature');
+  }
 }
 
 export default SensorsListItemThermometerComponent;

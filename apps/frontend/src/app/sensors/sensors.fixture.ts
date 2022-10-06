@@ -4,53 +4,50 @@ const sensors: Sensor[] = [
   {
     key: 'power-meter',
     name: 'Power',
-    type: SensorType.PowerMeter,
+    type: SensorType.POWER_METER,
     updated: new Date('2021-01-01T00:00:00.000Z'),
-    measurements: {
-      consumption: {
-        name: 'Consumption',
-        unit: 'Wh',
-      },
-      totalizer: {
-        name: 'Totalizer',
-        unit: 'kWh',
-      },
-    },
+    measurements: [{
+      key: 'consumption',
+      name: 'Consumption',
+      unit: 'Wh',
+    }, {
+      key: 'totalizer',
+      name: 'Totalizer',
+      unit: 'kWh',
+    }],
   },
   {
     key: 'water-meter',
     name: 'Water',
-    type: SensorType.WaterMeter,
+    type: SensorType.WATER_METER,
     updated: new Date('2021-01-01T00:00:00.000Z'),
-    measurements: {
-      consumption: {
-        name: 'Consumption',
-        unit: 'L',
-      },
-      totalizer: {
-        name: 'Totalizer',
-        unit: 'L',
-      },
-    },
+    measurements: [{
+      key: 'consumption',
+      name: 'Consumption',
+      unit: 'L',
+    }, {
+      key: 'totalizer',
+      name: 'Totalizer',
+      unit: 'L',
+    }],
   },
   {
     key: 'thermometer-living',
     name: 'Thermometer Living',
-    type: SensorType.Thermometer,
-    measurements: {
-      temperature: {
-        name: 'Temperature',
-        unit: '°C',
-      },
-      humidity: {
-        name: 'Humidity',
-        unit: '%',
-      },
-      pressure: {
-        name: 'Pressure',
-        unit: 'hPa',
-      },
-    },
+    type: SensorType.THERMOMETER,
+    measurements: [{
+      key: 'temperature',
+      name: 'Temperature',
+      unit: '°C',
+    }, {
+      key: 'humidity',
+      name: 'Humidity',
+      unit: '%',
+    }, {
+      key: 'pressure',
+      name: 'Pressure',
+      unit: 'hPa',
+    }],
   },
 ];
 

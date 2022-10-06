@@ -1,0 +1,61 @@
+{
+    "data": {
+        "sensors": [
+            {
+                "__typename": "Sensor",
+                "key": "power-meter",
+                "name": "Power",
+                "type": "POWER_METER",
+                "updated": "2022-10-06T06:45:07.532Z",
+                "measurements": [
+                    {
+                        "__typename": "Measurement",
+                        "key": "consumption",
+                        "name": "Consumption",
+                        "unit": "W",
+                        "value": 236.53
+                    },
+                    {
+                        "__typename": "Measurement",
+                        "key": "totalizer",
+                        "name": "Totalizer",
+                        "unit": "kWh",
+                        "value": 272.048
+                    }
+                ]
+            },
+            {
+                "__typename": "Sensor",
+                "key": "thermometer-living",
+                "name": "Thermometer Living",
+                "type": "THERMOMETER",
+                "updated": "2022-10-06T06:45:01.576Z",
+                "measurements": [
+                    {
+                        "__typename": "Measurement",
+                        "key": "temperature",
+                        "name": "Temperature",
+                        "unit": "°C",
+                        "value": 22.84
+                    },
+                    {
+                        "__typename": "Measurement",
+                        "key": "humidity",
+                        "name": "Humidity",
+                        "unit": "%",
+                        "value": 65.3
+                    },
+                    {
+                        "__typename": "Measurement",
+                        "key": "pressure",
+                        "name": "Pressure",
+                        "unit": "hPa",
+                        "value": null
+                    }
+                ]
+            }
+        ]
+    },
+    "loading": false,
+    "networkStatus": 7
+}

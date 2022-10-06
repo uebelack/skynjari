@@ -1,0 +1,27 @@
+{
+    "data": {
+        "sensorUpdated": {
+            "key": "power-meter",
+            "name": "Power",
+            "type": "POWER_METER",
+            "updated": "2022-10-06T06:45:38.953Z",
+            "measurements": [
+                {
+                    "key": "consumption",
+                    "name": "Consumption",
+                    "unit": "W",
+                    "value": 226.12,
+                    "__typename": "Measurement"
+                },
+                {
+                    "key": "totalizer",
+                    "name": "Totalizer",
+                    "unit": "kWh",
+                    "value": 272.05,
+                    "__typename": "Measurement"
+                }
+            ],
+            "__typename": "Sensor"
+        }
+    }
+}
