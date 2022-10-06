@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngrx/store';
-import { Socket } from 'ngx-socket-io';
 import { map } from 'rxjs/operators';
-import { Sensor, MeasurementsArrivedEvent } from '@skynjari/data-model';
+import { Sensor, SensorType } from '@skynjari/data-model';
+import { Apollo, gql } from 'apollo-angular';
 import sensorsUpdated from './sensors.actions';
 import selectSensors from './sensors.selector';
 
@@ -13,39 +12,84 @@ import selectSensors from './sensors.selector';
 class SensorsService {
   sensors: readonly Sensor[] = [];
 
-  constructor(private http: HttpClient, private socket: Socket, private store: Store) {}
+  constructor(private apollo: Apollo, private store: Store) {}
 
   init() {
     this.store.select(selectSensors).subscribe((sensors) => {
       this.sensors = sensors;
     });
-
-    this.refresh(() => {
-      this.socket.fromEvent('measurements').subscribe((payload) => {
-        const event = JSON.parse(payload as string) as MeasurementsArrivedEvent;
-        const nextSensors = JSON.parse(JSON.stringify(this.sensors))
-          .map((sensor: Sensor) => ({ ...sensor, updated: sensor.updated && new Date(sensor.updated as unknown as string) })) as Sensor[];
-        const sensor = nextSensors.find((s) => s.key === event.sensorKey);
-        if (sensor && sensor.measurements) {
-          sensor.updated = new Date(event.timestamp);
-          Object.keys(sensor.measurements).forEach((key) => {
-            sensor.measurements[key].value = event.measurements[key];
-          });
-        }
-        this.store.dispatch(sensorsUpdated({ sensors: nextSensors }));
-      });
-    });
+    this.refresh();
   }
 
-  refresh(callback: Function | undefined = undefined) {
-    this.http.get<Sensor[]>('/api/v1/sensors')
-      .pipe(map((sensors) => sensors.map((sensor) => ({ ...sensor, updated: sensor.updated && new Date(sensor.updated) }))))
-      .subscribe((sensors) => {
-        this.store.dispatch(sensorsUpdated({ sensors }));
-        if (callback) {
-          callback();
+  refresh() {
+    this.apollo.watchQuery({
+      query: gql`
+        {
+          sensors {
+            key
+            name
+            type
+            updated
+            measurements {
+              key
+              name
+              unit
+              value
+            }
+          }
         }
-      });
+      `,
+    }).valueChanges.pipe(map((result) => {
+      if (result.data) {
+        return (result.data as { sensors: Sensor[] }).sensors.map((sensor) => ({
+          ...sensor,
+          updated: sensor.updated && new Date(sensor.updated),
+          type: sensor.type as SensorType,
+        }));
+      }
+      return [];
+    })).subscribe((sensors) => {
+      this.store.dispatch(sensorsUpdated({ sensors }));
+    });
+
+    this.apollo.subscribe({
+      query: gql`
+      subscription OnSensorUpdated {
+        sensorUpdated {
+          key
+          name
+          type
+          updated
+          measurements {
+            key
+            name
+            unit
+            value
+          }
+        }
+      }
+      `,
+    }).pipe(map((result) => {
+      if (result.data) {
+        const sensor = (result.data as { sensorUpdated: Sensor }).sensorUpdated;
+        return {
+          ...sensor,
+          updated: sensor.updated && new Date(sensor.updated),
+          type: sensor.type as SensorType,
+        };
+      }
+      return null;
+    })).subscribe((sensor) => {
+      if (sensor) {
+        const sensors = this.sensors.map((s) => {
+          if (s.key === sensor.key) {
+            return sensor;
+          }
+          return s;
+        });
+        this.store.dispatch(sensorsUpdated({ sensors }));
+      }
+    });
   }
 }
 

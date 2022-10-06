@@ -1,7 +1,7 @@
 import {
   Component, OnInit, OnDestroy, Input,
 } from '@angular/core';
-import { Sensor } from '@skynjari/data-model';
+import { Sensor, SensorType } from '@skynjari/data-model';
 
 @Component({
   selector: 'skynjari-sensors-list-item',
@@ -9,6 +9,8 @@ import { Sensor } from '@skynjari/data-model';
 })
 class SensorsListItemComponent implements OnInit, OnDestroy {
   @Input() sensor!: Sensor;
+
+  readonly SensorType = SensorType;
 
   updated?: Date;
 
@@ -19,9 +21,9 @@ class SensorsListItemComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.updated = this.sensor?.updated;
+    this.updated = this.sensor?.updated ? new Date(this.sensor.updated) : undefined;
     this.interval = setInterval(() => {
-      this.updated = this.sensor?.updated;
+      this.updated = this.sensor?.updated ? new Date(this.sensor.updated) : undefined;
     }, 1000);
   }
 }

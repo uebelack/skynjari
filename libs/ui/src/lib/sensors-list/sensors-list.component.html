@@ -1,3 +1,6 @@
-<ul *ngFor="let sensor of sensors" class="w-full">
-  <skynjari-sensors-list-item [sensor]="sensor"></skynjari-sensors-list-item>
+<ul class="flex flex-row flex-wrap">
+  <li *ngFor="let sensor of sensors" class="m-1 flex-grow w-96">
+    <skynjari-sensors-list-item [sensor]="sensor"></skynjari-sensors-list-item>
+  </li>
 </ul>
+

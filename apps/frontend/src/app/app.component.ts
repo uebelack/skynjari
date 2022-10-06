@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-
 import { OnPageVisible } from 'angular-page-visibility';
+
 import SensorsService from './sensors/sensors.service';
 import selectSensors from './sensors/sensors.selector';
 

@@ -6,7 +6,7 @@ interface Sensor {
   name: string
   type: SensorType
   updated?: Date
-  measurements: Record<string, Measurement>
+  measurements: Measurement[]
 }
 
 export default Sensor;

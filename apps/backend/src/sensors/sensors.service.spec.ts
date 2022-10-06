@@ -11,7 +11,7 @@ describe('SensorsService', () => {
   beforeEach(async () => {
     jest.spyOn(ConfigService.prototype, 'get').mockReturnValue(sensorConfig.sensors);
     const module: TestingModule = await Test.createTestingModule({
-      providers: [SensorsService, ConfigService],
+      providers: [{ provide: 'PUB_SUB', useValue: { publish: jest.fn() } }, SensorsService, ConfigService],
     }).compile();
 
     service = module.get<SensorsService>(SensorsService);
@@ -33,17 +33,16 @@ describe('SensorsService', () => {
     expect(await service.findByKey('power-meter')).toEqual({
       key: 'power-meter',
       name: 'Power',
-      type: SensorType.PowerMeter,
-      measurements: {
-        consumption: {
-          name: 'Consumption',
-          unit: 'Wh',
-        },
-        totalizer: {
-          name: 'Totalizer',
-          unit: 'kWh',
-        },
-      },
+      type: SensorType.POWER_METER,
+      measurements: [{
+        key: 'consumption',
+        name: 'Consumption',
+        unit: 'Wh',
+      }, {
+        key: 'totalizer',
+        name: 'Totalizer',
+        unit: 'kWh',
+      }],
     });
 
     const timestamp = new Date();
@@ -62,20 +61,19 @@ describe('SensorsService', () => {
     expect(await service.findByKey('power-meter')).toEqual({
       key: 'power-meter',
       name: 'Power',
-      type: SensorType.PowerMeter,
+      type: SensorType.POWER_METER,
       updated: timestamp,
-      measurements: {
-        consumption: {
-          name: 'Consumption',
-          unit: 'Wh',
-          value: 342.32,
-        },
-        totalizer: {
-          name: 'Totalizer',
-          unit: 'kWh',
-          value: 123456.78,
-        },
-      },
+      measurements: [{
+        key: 'consumption',
+        name: 'Consumption',
+        unit: 'Wh',
+        value: 342.32,
+      }, {
+        key: 'totalizer',
+        name: 'Totalizer',
+        unit: 'kWh',
+        value: 123456.78,
+      }],
     });
   });
 
@@ -83,7 +81,7 @@ describe('SensorsService', () => {
     jest.spyOn(ConfigService.prototype, 'get').mockReturnValue(undefined);
 
     const module: TestingModule = await Test.createTestingModule({
-      providers: [SensorsService, ConfigService],
+      providers: [SensorsService, ConfigService, { provide: 'PUB_SUB', useValue: { publish: jest.fn() } }],
     }).compile();
 
     expect(() => module.get<SensorsService>(SensorsService)).not.toThrow();
