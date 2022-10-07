@@ -1,0 +1,17 @@
+services:
+  influxdb:
+    image: influxdb:2.4
+    container_name: skynjari-influxdb
+    ports:
+      - '8086:8086'
+    volumes:
+      - $PWD/.influxdb/data:/var/lib/influxdb2
+      - $PWD/.influxdb/config:/etc/influxdb2
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=skynjari
+      - DOCKER_INFLUXDB_INIT_PASSWORD=skynjari
+      - DOCKER_INFLUXDB_INIT_ORG=skynjari
+      - DOCKER_INFLUXDB_INIT_BUCKET=skynjari
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=skynjari
+

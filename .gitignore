@@ -44,3 +44,4 @@ Thumbs.db
 config/sensors.yaml
 config/mqtt.yaml
 
+.influxdb
