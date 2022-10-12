@@ -1,8 +1,8 @@
 import { ConfigService } from '@nestjs/config';
 import { Injectable, Inject } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
-import { MeasurementsArrivedEvent } from '@skynjari/data-model';
 import { PubSub } from 'graphql-subscriptions';
+import MeasurementsArrivedEvent from '../measurements/measurements-arrived.event';
 import Sensor from './sensor.type';
 
 @Injectable()

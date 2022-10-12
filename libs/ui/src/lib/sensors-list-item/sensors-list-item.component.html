@@ -1,15 +1,15 @@
 <div class="bg-base-100 shadow-md rounded-box p-3 text-base-content">
   <h2 class="text-lg text-secondary">{{ sensor.name }}</h2>
   <skynjari-sensors-list-item-power-meter 
-    *ngIf="sensor.type === SensorType.POWER_METER"
+    *ngIf="sensor.type.toString() === 'POWER_METER'"
     [sensor]="sensor">
   </skynjari-sensors-list-item-power-meter>
   <skynjari-sensors-list-item-water-meter 
-    *ngIf="sensor.type === SensorType.WATER_METER"
+    *ngIf="sensor.type.toString() === 'WATER_METER'"
     [sensor]="sensor">
   </skynjari-sensors-list-item-water-meter>
   <skynjari-sensors-list-item-thermometer 
-    *ngIf="sensor.type === SensorType.THERMOMETER"
+    *ngIf="sensor.type.toString() === 'THERMOMETER'"
     [sensor]="sensor">
   </skynjari-sensors-list-item-thermometer>
   <div class="flex w-full justify-end mt-2">{{ updated | timeago}}</div>

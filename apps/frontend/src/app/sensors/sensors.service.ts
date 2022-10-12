@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
-import { Sensor, SensorType } from '@skynjari/data-model';
+import { Sensor } from '@skynjari/data-model';
 import { Apollo, gql } from 'apollo-angular';
 import sensorsUpdated from './sensors.actions';
 import selectSensors from './sensors.selector';
@@ -44,7 +44,6 @@ class SensorsService {
         return (result.data as { sensors: Sensor[] }).sensors.map((sensor) => ({
           ...sensor,
           updated: sensor.updated && new Date(sensor.updated),
-          type: sensor.type as SensorType,
         }));
       }
       return [];
@@ -75,7 +74,6 @@ class SensorsService {
         return {
           ...sensor,
           updated: sensor.updated && new Date(sensor.updated),
-          type: sensor.type as SensorType,
         };
       }
       return null;

@@ -1,6 +1,7 @@
 import { ConfigService } from '@nestjs/config';
-import { SensorType, MeasurementsArrivedEvent } from '@skynjari/data-model';
+import { SensorType } from '@skynjari/data-model';
 import { Test, TestingModule } from '@nestjs/testing';
+import MeasurementsArrivedEvent from '../measurements/measurements-arrived.event';
 import sensorConfig from './sensors.config.fixture';
 
 import SensorsService from './sensors.service';

@@ -21,6 +21,7 @@ import SensorsResolver from './sensors.resolver';
     ConfigService,
     SensorsResolver,
   ],
+  exports: [SensorsService],
 })
 class SensorsModule {}
 

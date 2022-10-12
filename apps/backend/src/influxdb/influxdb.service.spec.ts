@@ -1,17 +1,19 @@
 import { Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
-import { MeasurementsArrivedEvent } from '@skynjari/data-model';
 import { InfluxDB, WriteApi, Point } from '@influxdata/influxdb-client';
+import { SensorType } from '@skynjari/data-model';
+import MeasurementsArrivedEvent from '../measurements/measurements-arrived.event';
 import InfluxDBService from './influxdb.service';
+import SensorsService from '../sensors/sensors.service';
 
 describe('InfluxDBService', () => {
   let service: InfluxDBService;
-
+  const sensorsService = { findByKey: jest.fn() };
   beforeEach(async () => {
     jest.spyOn(ConfigService.prototype, 'get').mockReturnValue({ url: 'http://influxdb.example.com:8086', token: 'skynjari' });
     const module: TestingModule = await Test.createTestingModule({
-      providers: [InfluxDBService, ConfigService],
+      providers: [InfluxDBService, ConfigService, { provide: SensorsService, useValue: sensorsService }],
     }).compile();
 
     service = module.get<InfluxDBService>(InfluxDBService);
@@ -23,10 +25,11 @@ describe('InfluxDBService', () => {
 
   it('should handle measurements arrived event', async () => {
     const writeApi = {
-      writePoints: jest.fn(),
+      writePoint: jest.fn(),
       close: jest.fn(),
     };
 
+    sensorsService.findByKey.mockReturnValue({ type: SensorType.POWER_METER });
     jest.spyOn(InfluxDB.prototype, 'getWriteApi').mockReturnValue(writeApi as unknown as WriteApi);
 
     const timestamp = new Date();
@@ -41,10 +44,9 @@ describe('InfluxDBService', () => {
 
     await service.handleMeasurementsArrivedEvent(event);
 
-    expect(writeApi.writePoints).toBeCalledWith([
-      new Point('consumption').tag('sensor', 'power-meter').floatField('value', 342.32),
-      new Point('totalizer').tag('sensor', 'power-meter').floatField('value', 123456.78),
-    ]);
+    expect(writeApi.writePoint).toBeCalledWith(
+      new Point('power-meter').tag('sensor', 'power-meter').floatField('consumption', 342.32).floatField('totalizer', 123456.78),
+    );
 
     expect(writeApi.close).toBeCalled();
   });
@@ -52,7 +54,7 @@ describe('InfluxDBService', () => {
   it('should handle errors and log it while handleMeasurementsArrivedEvent', async () => {
     const error = new Error('Something went wrong');
     const writeApi = {
-      writePoints: () => { throw error; },
+      writePoint: () => { throw error; },
     };
 
     jest.spyOn(InfluxDB.prototype, 'getWriteApi').mockReturnValue(writeApi as unknown as WriteApi);
