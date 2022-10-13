@@ -7,10 +7,17 @@ import Sensor from './sensor.type';
 
 describe('SensorsResolver', () => {
   let resolver: SensorsResolver;
+  const sensorService = { findByKey: jest.fn(), findAll: jest.fn() };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [SensorsResolver, SensorsService, ConfigService, { provide: 'PUB_SUB', useValue: { publish: jest.fn(), asyncIterator: () => 'TEST' } }],
+      providers: [
+        SensorsResolver,
+        SensorsService,
+        { provide: SensorsService, useValue: sensorService },
+        ConfigService,
+        { provide: 'PUB_SUB', useValue: { publish: jest.fn(), asyncIterator: () => 'TEST' } },
+      ],
     }).compile();
 
     resolver = module.get<SensorsResolver>(SensorsResolver);
@@ -22,19 +29,19 @@ describe('SensorsResolver', () => {
 
   it('should return sensor for key', async () => {
     const expectedSensor = new Sensor();
-    jest.spyOn(SensorsService.prototype, 'findByKey').mockReturnValue(Promise.resolve(expectedSensor));
+    sensorService.findByKey.mockReturnValue(Promise.resolve(expectedSensor));
     const sensor = await resolver.sensor('power-meter');
     expect(sensor).toEqual(expectedSensor);
   });
 
   it('should throuw if sensor cant be found', async () => {
-    jest.spyOn(SensorsService.prototype, 'findByKey').mockReturnValue(Promise.resolve(null));
+    sensorService.findByKey.mockReturnValue(Promise.resolve(null));
     await expect(async () => resolver.sensor('power-meter')).rejects.toThrow(NotFoundException);
   });
 
   it('should return all sensors', async () => {
     const expectedSensors = [new Sensor()];
-    jest.spyOn(SensorsService.prototype, 'findAll').mockReturnValue(Promise.resolve(expectedSensors));
+    sensorService.findAll.mockReturnValue(Promise.resolve(expectedSensors));
     const sensors = await resolver.sensors();
     expect(sensors).toEqual(expectedSensors);
   });

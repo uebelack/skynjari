@@ -6,6 +6,9 @@ const config = {
       key: 'power-meter',
       name: 'Power',
       type: SensorType.POWER_METER,
+      tags: [
+        { key: 'building', value: 'main' },
+      ],
       measurements: [{
         key: 'consumption',
         name: 'Consumption',

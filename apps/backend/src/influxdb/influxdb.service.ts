@@ -3,9 +3,6 @@ import {
 } from '@nestjs/common';
 import { InfluxDB, Point } from '@influxdata/influxdb-client';
 import { ConfigService } from '@nestjs/config';
-import { OnEvent } from '@nestjs/event-emitter';
-import SensorsService from '../sensors/sensors.service';
-import MeasurementsArrivedEvent from '../measurements/measurements-arrived.event';
 import InfluxDBConfig from './influxdb.config.interface';
 
 @Injectable()
@@ -16,7 +13,7 @@ class InfluxDBService {
 
   private influxDBConfig: InfluxDBConfig;
 
-  constructor(private configService: ConfigService, private sensorsService: SensorsService) {
+  constructor(private configService: ConfigService) {
     this.influxDBConfig = this.configService.get('influxdb') as InfluxDBConfig;
     this.client = new InfluxDB({ url: this.influxDBConfig.url, token: this.influxDBConfig.token });
   }
@@ -25,31 +22,22 @@ class InfluxDBService {
     return this.client.getWriteApi(this.influxDBConfig.org, this.influxDBConfig.bucket);
   }
 
-  @OnEvent(MeasurementsArrivedEvent.KEY, { async: true })
-  async handleMeasurementsArrivedEvent(event: MeasurementsArrivedEvent) {
-    try {
-      const sensor = await this.sensorsService.findByKey(event.sensorKey);
-      if (sensor) {
-        const point = new Point(sensor.type.toString());
-        point.tag('sensorKey', event.sensorKey);
+  async storePoint(measurement: string, timestamp: Date, tags: Record<string, string>, values: Record<string, number>) {
+    const point = new Point(measurement);
 
-        if (sensor.tags) {
-          sensor.tags.forEach((tag) => {
-            point.tag(tag.key, tag.value);
-          });
-        }
+    point.timestamp(timestamp);
 
-        Object.keys(event.measurements).forEach((key) => {
-          point.floatField(key, event.measurements[key]);
-        });
+    Object.keys(tags).forEach((key) => {
+      point.tag(key, tags[key]);
+    });
 
-        const writeApi = this.createWriteApi();
-        writeApi.writePoint(point);
-        await writeApi.close();
-      }
-    } catch (e) {
-      this.logger.error(e);
-    }
+    Object.keys(values).forEach((key) => {
+      point.floatField(key, values[key]);
+    });
+
+    const writeApi = this.createWriteApi();
+    writeApi.writePoint(point);
+    await writeApi.close();
   }
 }
 

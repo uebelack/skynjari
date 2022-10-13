@@ -1,6 +1,7 @@
 import { ConfigService } from '@nestjs/config';
 import { SensorType } from '@skynjari/data-model';
 import { Test, TestingModule } from '@nestjs/testing';
+import InfluxDBService from '../influxdb/influxdb.service';
 import MeasurementsArrivedEvent from '../measurements/measurements-arrived.event';
 import sensorConfig from './sensors.config.fixture';
 
@@ -8,11 +9,16 @@ import SensorsService from './sensors.service';
 
 describe('SensorsService', () => {
   let service: SensorsService;
-
+  const influxDBService = { storePoint: jest.fn() };
   beforeEach(async () => {
     jest.spyOn(ConfigService.prototype, 'get').mockReturnValue(sensorConfig.sensors);
     const module: TestingModule = await Test.createTestingModule({
-      providers: [{ provide: 'PUB_SUB', useValue: { publish: jest.fn() } }, SensorsService, ConfigService],
+      providers: [
+        { provide: 'PUB_SUB', useValue: { publish: jest.fn() } },
+        SensorsService,
+        ConfigService,
+        { provide: InfluxDBService, useValue: influxDBService },
+      ],
     }).compile();
 
     service = module.get<SensorsService>(SensorsService);
@@ -35,6 +41,9 @@ describe('SensorsService', () => {
       key: 'power-meter',
       name: 'Power',
       type: SensorType.POWER_METER,
+      tags: [
+        { key: 'building', value: 'main' },
+      ],
       measurements: [{
         key: 'consumption',
         name: 'Consumption',
@@ -64,6 +73,9 @@ describe('SensorsService', () => {
       name: 'Power',
       type: SensorType.POWER_METER,
       updated: timestamp,
+      tags: [
+        { key: 'building', value: 'main' },
+      ],
       measurements: [{
         key: 'consumption',
         name: 'Consumption',
@@ -76,13 +88,25 @@ describe('SensorsService', () => {
         value: 123456.78,
       }],
     });
+
+    expect(influxDBService.storePoint).toHaveBeenCalledWith(
+      'power-meter',
+      timestamp,
+      { building: 'main', sensorKey: 'power-meter' },
+      { consumption: 342.32, totalizer: 123456.78 },
+    );
   });
 
   it('should not crash if no sensor is configured', async () => {
     jest.spyOn(ConfigService.prototype, 'get').mockReturnValue(undefined);
 
     const module: TestingModule = await Test.createTestingModule({
-      providers: [SensorsService, ConfigService, { provide: 'PUB_SUB', useValue: { publish: jest.fn() } }],
+      providers: [
+        SensorsService,
+        ConfigService,
+        { provide: 'PUB_SUB', useValue: { publish: jest.fn() } },
+        { provide: InfluxDBService, useValue: influxDBService },
+      ],
     }).compile();
 
     expect(() => module.get<SensorsService>(SensorsService)).not.toThrow();
