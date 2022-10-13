@@ -25,6 +25,7 @@ type Sensor {
   key: ID!
   measurements: [Measurement!]!
   name: String!
+  tags: [Tag!]!
   type: SensorType!
   updated: DateTime
 }
@@ -37,4 +38,10 @@ enum SensorType {
 
 type Subscription {
   sensorUpdated: Sensor!
+}
+
+"""tag"""
+type Tag {
+  key: ID!
+  value: String!
 }

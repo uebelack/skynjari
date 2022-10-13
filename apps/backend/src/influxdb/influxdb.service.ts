@@ -31,7 +31,13 @@ class InfluxDBService {
       const sensor = await this.sensorsService.findByKey(event.sensorKey);
       if (sensor) {
         const point = new Point(sensor.type.toString());
-        point.tag('sensor', event.sensorKey);
+        point.tag('sensorKey', event.sensorKey);
+
+        if (sensor.tags) {
+          sensor.tags.forEach((tag) => {
+            point.tag(tag.key, tag.value);
+          });
+        }
 
         Object.keys(event.measurements).forEach((key) => {
           point.floatField(key, event.measurements[key]);

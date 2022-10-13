@@ -7,6 +7,7 @@ import {
 
 import { SensorType } from '@skynjari/data-model';
 import Measurement from '../measurements/measurement.type';
+import Tag from '../tags/tag.type';
 
 registerEnumType(SensorType, { name: 'SensorType' });
 
@@ -23,6 +24,9 @@ class Sensor {
 
   @Field({ nullable: true })
     updated?: Date;
+
+  @Field(/* istanbul ignore next */ type => [Tag])
+    tags?: Tag[];
 
   @Field(/* istanbul ignore next */ type => [Measurement])
     measurements!: Measurement[];

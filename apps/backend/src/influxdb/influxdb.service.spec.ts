@@ -29,7 +29,7 @@ describe('InfluxDBService', () => {
       close: jest.fn(),
     };
 
-    sensorsService.findByKey.mockReturnValue({ type: SensorType.POWER_METER });
+    sensorsService.findByKey.mockReturnValue({ type: SensorType.POWER_METER, tags: [{ key: 'building', value: 'main' }] });
     jest.spyOn(InfluxDB.prototype, 'getWriteApi').mockReturnValue(writeApi as unknown as WriteApi);
 
     const timestamp = new Date();
@@ -45,7 +45,11 @@ describe('InfluxDBService', () => {
     await service.handleMeasurementsArrivedEvent(event);
 
     expect(writeApi.writePoint).toBeCalledWith(
-      new Point('power-meter').tag('sensor', 'power-meter').floatField('consumption', 342.32).floatField('totalizer', 123456.78),
+      new Point('power-meter')
+        .tag('sensorKey', 'power-meter')
+        .tag('building', 'main')
+        .floatField('consumption', 342.32)
+        .floatField('totalizer', 123456.78),
     );
 
     expect(writeApi.close).toBeCalled();
