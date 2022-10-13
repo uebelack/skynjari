@@ -2,6 +2,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Module } from '@nestjs/common';
 import { PubSub } from 'graphql-subscriptions';
 
+import MeasurementsModule from '../measurements/measurements.module';
 import sensorsConfig from './sensors.config';
 import SensorsService from './sensors.service';
 import SensorsResolver from './sensors.resolver';
@@ -11,6 +12,7 @@ import SensorsResolver from './sensors.resolver';
     ConfigModule.forRoot({
       load: [sensorsConfig],
     }),
+    MeasurementsModule,
   ],
   providers: [
     {
@@ -21,7 +23,6 @@ import SensorsResolver from './sensors.resolver';
     ConfigService,
     SensorsResolver,
   ],
-  exports: [SensorsService],
 })
 class SensorsModule {}
 

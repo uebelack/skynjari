@@ -1,6 +1,8 @@
 import { ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
-import { InfluxDB, WriteApi, Point } from '@influxdata/influxdb-client';
+import {
+  InfluxDB, WriteApi, QueryApi,
+} from '@influxdata/influxdb-client';
 import InfluxDBService from './influxdb.service';
 
 describe('InfluxDBService', () => {
@@ -20,29 +22,15 @@ describe('InfluxDBService', () => {
     expect(service).toBeDefined();
   });
 
-  it('should store points', () => {
-    const writeApi = {
-      writePoint: jest.fn(),
-      close: jest.fn(),
-    };
-
+  it('should return write api', () => {
+    const writeApi = {};
     jest.spyOn(InfluxDB.prototype, 'getWriteApi').mockReturnValue(writeApi as unknown as WriteApi);
+    expect(service.writeApi()).not.toBeNull();
+  });
 
-    const timestamp = new Date();
-    service.storePoint(
-      'power-meter',
-      timestamp,
-      { building: 'main', sensorKey: 'power-meter' },
-      { consumption: 342.32, totalizer: 123456.78 },
-    );
-
-    expect(writeApi.writePoint).toBeCalledWith(
-      new Point('power-meter')
-        .timestamp(timestamp)
-        .tag('sensorKey', 'power-meter')
-        .tag('building', 'main')
-        .floatField('consumption', 342.32)
-        .floatField('totalizer', 123456.78),
-    );
+  it('should return query api', () => {
+    const queryApi = {};
+    jest.spyOn(InfluxDB.prototype, 'getQueryApi').mockReturnValue(queryApi as unknown as QueryApi);
+    expect(service.queryApi()).not.toBeNull();
   });
 });

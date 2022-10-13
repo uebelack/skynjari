@@ -2,13 +2,13 @@ import { ConfigService } from '@nestjs/config';
 import { Injectable, Inject, Logger } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { PubSub } from 'graphql-subscriptions';
-import InfluxDBService from '../influxdb/influxdb.service';
+import MeasurementsService from '../measurements/measurements.service';
 import MeasurementsArrivedEvent from '../measurements/measurements-arrived.event';
 import Sensor from './sensor.type';
 
 @Injectable()
 class SensorsService {
-  private readonly logger = new Logger(InfluxDBService.name);
+  private readonly logger = new Logger(SensorsService.name);
 
   sensors: Sensor[] = [];
 
@@ -16,9 +16,14 @@ class SensorsService {
     private configService: ConfigService,
     @Inject('PUB_SUB')
     private readonly pubSub: PubSub,
-    private influxDBService: InfluxDBService,
+    private measurementsService: MeasurementsService,
   ) {
     this.sensors = this.configService.get('sensors') || [];
+    this.loadLatestMeasurements();
+  }
+
+  private async loadLatestMeasurements() {
+    // console.log('lala');
   }
 
   async findAll(): Promise<Sensor[]> {
@@ -41,12 +46,7 @@ class SensorsService {
         });
       }
 
-      await this.influxDBService.storePoint(
-        sensor.type.toString(),
-        new Date(event.timestamp),
-        tags,
-        event.measurements,
-      );
+      await this.measurementsService.storeMeasurements(sensor, event.timestamp, event.measurements);
 
       sensor.updated = new Date(event.timestamp);
       Object.keys(event.measurements).forEach((key) => {

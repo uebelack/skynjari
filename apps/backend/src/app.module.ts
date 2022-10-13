@@ -4,6 +4,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import MeasurementsModule from './measurements/measurements.module';
 import InfluxDBModule from './influxdb/influxdb.module';
 import SensorModule from './sensors/sensors.module';
 import MqttModule from './mqtt/mqtt.module';
@@ -26,6 +27,7 @@ import MqttModule from './mqtt/mqtt.module';
     SensorModule,
     MqttModule,
     InfluxDBModule,
+    MeasurementsModule,
   ],
 })
 class AppModule {}

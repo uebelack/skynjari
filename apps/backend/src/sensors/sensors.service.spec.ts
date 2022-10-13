@@ -1,7 +1,7 @@
 import { ConfigService } from '@nestjs/config';
 import { SensorType } from '@skynjari/data-model';
 import { Test, TestingModule } from '@nestjs/testing';
-import InfluxDBService from '../influxdb/influxdb.service';
+import MeasurementsService from '../measurements/measurements.service';
 import MeasurementsArrivedEvent from '../measurements/measurements-arrived.event';
 import sensorConfig from './sensors.config.fixture';
 
@@ -9,7 +9,7 @@ import SensorsService from './sensors.service';
 
 describe('SensorsService', () => {
   let service: SensorsService;
-  const influxDBService = { storePoint: jest.fn() };
+  const measurementsService = { storeMeasurements: jest.fn() };
   beforeEach(async () => {
     jest.spyOn(ConfigService.prototype, 'get').mockReturnValue(sensorConfig.sensors);
     const module: TestingModule = await Test.createTestingModule({
@@ -17,7 +17,7 @@ describe('SensorsService', () => {
         { provide: 'PUB_SUB', useValue: { publish: jest.fn() } },
         SensorsService,
         ConfigService,
-        { provide: InfluxDBService, useValue: influxDBService },
+        { provide: MeasurementsService, useValue: measurementsService },
       ],
     }).compile();
 
@@ -89,10 +89,9 @@ describe('SensorsService', () => {
       }],
     });
 
-    expect(influxDBService.storePoint).toHaveBeenCalledWith(
-      'power-meter',
+    expect(measurementsService.storeMeasurements).toHaveBeenCalledWith(
+      await service.findByKey('power-meter'),
       timestamp,
-      { building: 'main', sensorKey: 'power-meter' },
       { consumption: 342.32, totalizer: 123456.78 },
     );
   });
@@ -105,7 +104,7 @@ describe('SensorsService', () => {
         SensorsService,
         ConfigService,
         { provide: 'PUB_SUB', useValue: { publish: jest.fn() } },
-        { provide: InfluxDBService, useValue: influxDBService },
+        { provide: MeasurementsService, useValue: measurementsService },
       ],
     }).compile();
 

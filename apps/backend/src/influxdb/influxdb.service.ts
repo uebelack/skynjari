@@ -18,26 +18,12 @@ class InfluxDBService {
     this.client = new InfluxDB({ url: this.influxDBConfig.url, token: this.influxDBConfig.token });
   }
 
-  createWriteApi() {
+  writeApi() {
     return this.client.getWriteApi(this.influxDBConfig.org, this.influxDBConfig.bucket);
   }
 
-  async storePoint(measurement: string, timestamp: Date, tags: Record<string, string>, values: Record<string, number>) {
-    const point = new Point(measurement);
-
-    point.timestamp(timestamp);
-
-    Object.keys(tags).forEach((key) => {
-      point.tag(key, tags[key]);
-    });
-
-    Object.keys(values).forEach((key) => {
-      point.floatField(key, values[key]);
-    });
-
-    const writeApi = this.createWriteApi();
-    writeApi.writePoint(point);
-    await writeApi.close();
+  queryApi() {
+    this.client.getQueryApi(this.influxDBConfig.org);
   }
 }
 
