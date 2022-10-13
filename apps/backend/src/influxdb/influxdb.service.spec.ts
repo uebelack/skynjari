@@ -8,7 +8,11 @@ import InfluxDBService from './influxdb.service';
 describe('InfluxDBService', () => {
   let service: InfluxDBService;
   beforeEach(async () => {
-    jest.spyOn(ConfigService.prototype, 'get').mockReturnValue({ url: 'http://influxdb.example.com:8086', token: 'skynjari' });
+    jest.spyOn(ConfigService.prototype, 'get').mockReturnValue({
+      url: 'http://influxdb.example.com:8086',
+      token: 'skynjari-test',
+      bucket: 'skynjari-test-bucket',
+    });
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         InfluxDBService,
@@ -32,5 +36,9 @@ describe('InfluxDBService', () => {
     const queryApi = {};
     jest.spyOn(InfluxDB.prototype, 'getQueryApi').mockReturnValue(queryApi as unknown as QueryApi);
     expect(service.queryApi()).not.toBeNull();
+  });
+
+  it('should return bucket', () => {
+    expect(service.bucket()).toEqual('skynjari-test-bucket');
   });
 });

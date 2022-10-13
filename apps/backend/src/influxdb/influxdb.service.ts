@@ -18,12 +18,16 @@ class InfluxDBService {
     this.client = new InfluxDB({ url: this.influxDBConfig.url, token: this.influxDBConfig.token });
   }
 
+  bucket() {
+    return this.influxDBConfig.bucket;
+  }
+
   writeApi() {
     return this.client.getWriteApi(this.influxDBConfig.org, this.influxDBConfig.bucket);
   }
 
   queryApi() {
-    this.client.getQueryApi(this.influxDBConfig.org);
+    return this.client.getQueryApi(this.influxDBConfig.org);
   }
 }
 

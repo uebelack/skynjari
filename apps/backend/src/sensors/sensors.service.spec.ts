@@ -9,7 +9,7 @@ import SensorsService from './sensors.service';
 
 describe('SensorsService', () => {
   let service: SensorsService;
-  const measurementsService = { storeMeasurements: jest.fn() };
+  const measurementsService = { storeMeasurements: jest.fn(), loadLatestMeasurements: jest.fn() };
   beforeEach(async () => {
     jest.spyOn(ConfigService.prototype, 'get').mockReturnValue(sensorConfig.sensors);
     const module: TestingModule = await Test.createTestingModule({
@@ -26,6 +26,7 @@ describe('SensorsService', () => {
 
   it('should be defined', () => {
     expect(service).toBeDefined();
+    expect(measurementsService.loadLatestMeasurements).toBeCalled();
   });
 
   it('should return all sensors', async () => {

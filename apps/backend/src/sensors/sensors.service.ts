@@ -22,8 +22,13 @@ class SensorsService {
     this.loadLatestMeasurements();
   }
 
-  private async loadLatestMeasurements() {
-    // console.log('lala');
+  private async loadLatestMeasurements(sensorIndex = 0) {
+    if (this.sensors.length > sensorIndex) {
+      if (this.sensors[sensorIndex].measurements.length > 0) {
+        await this.measurementsService.loadLatestMeasurements(this.sensors[sensorIndex]);
+      }
+      this.loadLatestMeasurements(sensorIndex + 1);
+    }
   }
 
   async findAll(): Promise<Sensor[]> {
