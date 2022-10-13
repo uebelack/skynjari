@@ -92,6 +92,7 @@
     "jest": "28.1.1",
     "jest-environment-jsdom": "28.1.1",
     "jest-preset-angular": "~12.2.2",
+    "lcov-result-merger": "^3.3.0",
     "ng-mocks": "^14.2.2",
     "nx": "14.7.5",
     "postcss": "^8.4.5",

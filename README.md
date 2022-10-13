@@ -56,13 +56,13 @@ InfluxDB connection can be configured via environment variables:
 MIT License. See `LICENSE.txt` for more information.
 
 
-[build-shield]: https://img.shields.io/github/workflow/status/uebelacker/skynjari/Build.svg?style=for-the-badge
-[build-url]: https://github.com/uebelacker/skynjari/actions/workflows/main.yml
-[language-shield]: https://img.shields.io/github/languages/top/uebelacker/skynjari.svg?style=for-the-badge
-[language-url]: https://github.com/uebelacker/skynjari
-[coverage-shield]: https://img.shields.io/coveralls/github/uebelacker/skynjari.svg?style=for-the-badge
-[coverage-url]: https://coveralls.io/github/uebelacker/skynjari
-[license-shield]: https://img.shields.io/github/license/uebelacker/skynjari.svg?style=for-the-badge
-[license-url]: https://github.com/uebelacker/skynjari/blob/master/LICENSE.txt
+[build-shield]: https://img.shields.io/github/workflow/status/uebelack/skynjari/ci.svg?style=for-the-badge
+[build-url]: https://github.com/uebelack/skynjari/actions/workflows/ci.yml
+[language-shield]: https://img.shields.io/github/languages/top/uebelack/skynjari.svg?style=for-the-badge
+[language-url]: https://github.com/uebelack/skynjari
+[coverage-shield]: https://img.shields.io/coveralls/github/uebelack/skynjari.svg?style=for-the-badge
+[coverage-url]: https://coveralls.io/github/uebelack/skynjari
+[license-shield]: https://img.shields.io/github/license/uebelack/skynjari.svg?style=for-the-badge
+[license-url]: https://github.com/uebelack/skynjari/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/david-übelacker-600262222
