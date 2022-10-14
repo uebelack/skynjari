@@ -1,7 +1,7 @@
 import {
   Logger, Injectable,
 } from '@nestjs/common';
-import { InfluxDB, Point } from '@influxdata/influxdb-client';
+import { InfluxDB } from '@influxdata/influxdb-client';
 import { ConfigService } from '@nestjs/config';
 import InfluxDBConfig from './influxdb.config.interface';
 
