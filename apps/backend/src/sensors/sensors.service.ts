@@ -26,6 +26,7 @@ class SensorsService {
     if (this.sensors.length > sensorIndex) {
       if (this.sensors[sensorIndex].measurements.length > 0) {
         await this.measurementsService.loadLatestMeasurements(this.sensors[sensorIndex]);
+        await this.measurementsService.calculateTransientMeasurements(this.sensors[sensorIndex]);
       }
       this.loadLatestMeasurements(sensorIndex + 1);
     }
@@ -61,6 +62,7 @@ class SensorsService {
         }
       });
 
+      await this.measurementsService.calculateTransientMeasurements(sensor);
       this.pubSub.publish('sensorUpdated', { sensorUpdated: sensor });
     }
   }

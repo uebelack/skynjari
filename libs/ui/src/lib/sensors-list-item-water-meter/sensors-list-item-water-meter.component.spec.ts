@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { SensorType, Measurement } from '@skynjari/data-model';
 import SensorsListItemWaterMeterComponent from './sensors-list-item-water-meter.component';
 
 describe('SensorsListItemWaterMeterComponent', () => {
@@ -13,6 +13,16 @@ describe('SensorsListItemWaterMeterComponent', () => {
 
     fixture = TestBed.createComponent(SensorsListItemWaterMeterComponent);
     component = fixture.componentInstance;
+    component.sensor = {
+      name: 'Test',
+      key: 'test',
+      type: SensorType.POWER_METER,
+      measurements: [
+        {
+          key: 'total_today', name: 'Total Today', unit: 'L', value: 100,
+        } as Measurement,
+      ],
+    };
     fixture.detectChanges();
   });
 

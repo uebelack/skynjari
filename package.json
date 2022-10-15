@@ -49,6 +49,7 @@
     "graphql": "^16.6.0",
     "graphql-subscriptions": "^2.0.0",
     "js-yaml": "^4.1.0",
+    "luxon": "^3.0.4",
     "mqtt": "^4.3.7",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~7.5.0",

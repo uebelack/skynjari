@@ -2,8 +2,10 @@
 /* eslint-disable no-underscore-dangle */
 import { Injectable } from '@nestjs/common';
 import { Point } from '@influxdata/influxdb-client';
-import { Sensor } from '@skynjari/data-model';
+import { DateTime } from 'luxon';
+import Sensor from '../sensors/sensor.type';
 import InfluxDBService from '../influxdb/influxdb.service';
+import MeasurementConversion from './measurement-conversion.enum';
 
 @Injectable()
 class MeasurementsService {
@@ -42,6 +44,44 @@ class MeasurementsService {
     }
     if (measurementIndex + 1 < sensor.measurements.length) {
       await this.loadLatestMeasurements(sensor, measurementIndex + 1);
+    }
+  }
+
+  async calculateTransientMeasurements(sensor: Sensor, measurementIndex = 0) {
+    const measurement = sensor.measurements[measurementIndex];
+    if (measurement.base_measurement && measurement.conversion) {
+      if (measurement.conversion === MeasurementConversion.DIFFERENCE_TODAY) {
+        const from = DateTime.now().startOf('day').toISO();
+        const to = DateTime.now().endOf('day').toISO();
+        const query = `
+          last = from(bucket: "${this.influxDBService.bucket()}")
+            |> range(start: ${from}, stop: ${to})
+            |> filter(fn: (r) => r.sensorKey == "${sensor.key}" and r._field == "${measurement.base_measurement}")
+            |> last()
+
+          first = from(bucket: "${this.influxDBService.bucket()}")
+            |> range(start: ${from}, stop: ${to})
+            |> filter(fn: (r) => r.sensorKey == "${sensor.key}" and r._field == "${measurement.base_measurement}")
+            |> first()
+          
+          union(tables: [first, last])
+            |> difference()
+        `;
+
+        const result = await this.influxDBService.queryApi().collectRows(query);
+        if (result.length > 0) {
+          const row = (result[0] as { _value: number, _time: string });
+          if (row._value < 0) {
+            sensor.measurements[measurementIndex].value = row._value * -1;
+          } else {
+            sensor.measurements[measurementIndex].value = row._value;
+          }
+        }
+      }
+    }
+
+    if (measurementIndex + 1 < sensor.measurements.length) {
+      await this.calculateTransientMeasurements(sensor, measurementIndex + 1);
     }
   }
 }

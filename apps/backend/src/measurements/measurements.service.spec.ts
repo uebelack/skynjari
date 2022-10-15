@@ -3,6 +3,7 @@ import { SensorType } from '@skynjari/data-model';
 import { Point } from '@influxdata/influxdb-client';
 import InfluxDBService from '../influxdb/influxdb.service';
 import MeasurementsService from './measurements.service';
+import MeasurementConversion from './measurement-conversion.enum';
 
 import Sensor from '../sensors/sensor.type';
 
@@ -67,5 +68,51 @@ describe('MeasurementsService', () => {
     ];
     await service.loadLatestMeasurements(sensor);
     expect(queryApi.collectRows).toBeCalledTimes(2);
+  });
+
+  it('should calculate transient measurements', async () => {
+    queryApi.collectRows.mockReturnValue([
+      {
+        _value: 200, _time: '2014-11-10T23:00:00Z',
+      },
+    ]);
+    const sensor = new Sensor();
+    sensor.key = 'my-water-meter';
+    sensor.type = SensorType.WATER_METER;
+    sensor.measurements = [
+      { key: 'total', name: 'Total', unit: 'L' },
+      {
+        key: 'total_today',
+        name: 'Total today',
+        unit: 'L',
+        base_measurement: 'total',
+        conversion: MeasurementConversion.DIFFERENCE_TODAY,
+      },
+    ];
+    await service.calculateTransientMeasurements(sensor);
+    expect(sensor.measurements[1].value).toBe(200);
+  });
+
+  it('should calculate transient measurements and convert negative values to positive values', async () => {
+    queryApi.collectRows.mockReturnValue([
+      {
+        _value: -2342.22, _time: '2014-11-10T23:00:00Z',
+      },
+    ]);
+    const sensor = new Sensor();
+    sensor.key = 'my-water-meter';
+    sensor.type = SensorType.WATER_METER;
+    sensor.measurements = [
+      { key: 'total', name: 'Total', unit: 'L' },
+      {
+        key: 'total_today',
+        name: 'Total today',
+        unit: 'L',
+        base_measurement: 'total',
+        conversion: MeasurementConversion.DIFFERENCE_TODAY,
+      },
+    ];
+    await service.calculateTransientMeasurements(sensor);
+    expect(sensor.measurements[1].value).toBe(2342.22);
   });
 });

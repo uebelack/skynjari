@@ -4,6 +4,7 @@
 import {
   Field, ObjectType, ID,
 } from '@nestjs/graphql';
+import MeasurementConversion from './measurement-conversion.enum';
 
 @ObjectType({ description: 'measurement' })
 class Measurement {
@@ -15,6 +16,10 @@ class Measurement {
 
   @Field()
     unit!: string;
+
+  base_measurement?: string;
+
+  conversion?: MeasurementConversion;
 
   @Field({ nullable: true })
     value?: number;
