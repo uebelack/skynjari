@@ -5,6 +5,7 @@ import SensorsListItemComponent from './sensors-list-item/sensors-list-item.comp
 import SensorsListItemPowerMeterComponent from './sensors-list-item-power-meter/sensors-list-item-power-meter.component';
 import SensorsListItemWaterMeterComponent from './sensors-list-item-water-meter/sensors-list-item-water-meter.component';
 import SensorsListItemThermometerComponent from './sensors-list-item-thermometer/sensors-list-item-thermometer.component';
+import SensorsListItemHeatingMeterComponent from './sensors-list-item-heating-meter/sensors-list-item-heating-meter.component';
 
 import TimeagoPipe from './timeago.pipe';
 
@@ -16,6 +17,7 @@ import TimeagoPipe from './timeago.pipe';
     SensorsListItemPowerMeterComponent,
     SensorsListItemWaterMeterComponent,
     SensorsListItemThermometerComponent,
+    SensorsListItemHeatingMeterComponent,
     TimeagoPipe,
   ],
   exports: [
@@ -24,6 +26,7 @@ import TimeagoPipe from './timeago.pipe';
     SensorsListItemPowerMeterComponent,
     SensorsListItemWaterMeterComponent,
     SensorsListItemThermometerComponent,
+    SensorsListItemHeatingMeterComponent,
   ],
 })
 class UiModule {}

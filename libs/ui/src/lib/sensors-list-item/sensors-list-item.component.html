@@ -12,5 +12,9 @@
     *ngIf="sensor.type.toString() === 'THERMOMETER'"
     [sensor]="sensor">
   </skynjari-sensors-list-item-thermometer>
+  <skynjari-sensors-list-item-heating-meter 
+    *ngIf="sensor.type.toString() === 'HEATING_METER'"
+    [sensor]="sensor">
+  </skynjari-sensors-list-item-heating-meter>
   <div class="flex w-full justify-end mt-2">{{ updated | timeago}}</div>
 </div>

@@ -31,6 +31,7 @@ type Sensor {
 }
 
 enum SensorType {
+  HEATING_METER
   POWER_METER
   THERMOMETER
   WATER_METER
