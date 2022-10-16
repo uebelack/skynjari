@@ -48,11 +48,12 @@ class MeasurementsService {
   }
 
   async calculateTransientMeasurements(sensor: Sensor, measurementIndex = 0) {
+    const timezone = process.env.TZ || DateTime.local().zoneName;
     const measurement = sensor.measurements[measurementIndex];
     if (measurement.base_measurement && measurement.conversion) {
       if (measurement.conversion === MeasurementConversion.DIFFERENCE_TODAY) {
-        const from = DateTime.now().startOf('day').toISO();
-        const to = DateTime.now().endOf('day').toISO();
+        const from = DateTime.now().setZone(timezone).startOf('day').toISO();
+        const to = DateTime.now().setZone(timezone).endOf('day').toISO();
         const query = `
           last = from(bucket: "${this.influxDBService.bucket()}")
             |> range(start: ${from}, stop: ${to})

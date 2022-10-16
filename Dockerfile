@@ -27,6 +27,8 @@ COPY yarn.lock ./
 
 RUN yarn install --ignore-scripts --production
 
+RUN rm -rf node_modules/typescript
+
 COPY --from=build --chown=node:node /app/dist/apps /app
 
 EXPOSE 3333
