@@ -23,6 +23,7 @@ class SensorsService {
 
   refresh() {
     this.apollo.watchQuery({
+      fetchPolicy: 'cache-and-network',
       query: gql`
         {
           sensors {
