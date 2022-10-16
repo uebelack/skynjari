@@ -32,7 +32,7 @@ class MeasurementsService {
 
   async loadLatestMeasurements(sensor: Sensor, measurementIndex = 0) {
     const query = `from(bucket: "${this.influxDBService.bucket()}")
-      |> range(start: -1h)
+      |> range(start: -30d)
       |> filter(fn: (r) => r._measurement == "${sensor.type}" and r.sensorKey == "${sensor.key}" and r._field == "${sensor.measurements[measurementIndex].key}")
       |> last()`;
 
