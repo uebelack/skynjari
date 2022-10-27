@@ -70,12 +70,14 @@ class MeasurementsService {
         `;
 
         const result = await this.influxDBService.queryApi().collectRows(query);
+        sensor.measurements[measurementIndex].value = 0;
         if (result.length > 0) {
           const row = (result[0] as { _value: number, _time: string });
+          const multiplier = measurement.multiplier || 1;
           if (row._value < 0) {
-            sensor.measurements[measurementIndex].value = row._value * -1;
+            sensor.measurements[measurementIndex].value = row._value * -1 * multiplier;
           } else {
-            sensor.measurements[measurementIndex].value = row._value;
+            sensor.measurements[measurementIndex].value = row._value * multiplier;
           }
         }
       }

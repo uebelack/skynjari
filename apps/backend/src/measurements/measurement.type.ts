@@ -21,6 +21,8 @@ class Measurement {
 
   conversion?: MeasurementConversion;
 
+  multiplier?: number;
+
   @Field({ nullable: true })
     value?: number;
 }

@@ -2,10 +2,16 @@
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8">
     <path fill-rule="evenodd" d="M14.615 1.595a.75.75 0 01.359.852L12.982 9.75h7.268a.75.75 0 01.548 1.262l-10.5 11.25a.75.75 0 01-1.272-.71l1.992-7.302H3.75a.75.75 0 01-.548-1.262l10.5-11.25a.75.75 0 01.913-.143z" clip-rule="evenodd" />
   </svg>  
-  <div class="flex justify-end items-end grow">
-    <div class="text-3xl">{{consumptionToday?.value | number: '1.1-1'}}</div>
-    <div class="ml-1 text-lg">{{consumptionToday?.unit}}</div>
-    <div class="ml-4 text-5xl">{{consumption?.value | number: '1.0-0'}}</div>
-    <div class="ml-1 text-lg">{{consumption?.unit}}</div>
+  <div class="flex flex-col justify-end items-end grow">
+    <div class="flex justify-end items-end grow">
+      <div class="ml-4 text-5xl">{{consumption?.value | number: '1.0-0'}}</div>
+      <div class="ml-1 text-lg">{{consumption?.unit}}</div>
+    </div>
+    <div class="flex justify-end items-end grow mt-2">
+      <div class="text-3xl">{{costsToday?.value | number: '1.1-1'}}</div>
+      <div class="ml-1 text-lg">{{costsToday?.unit}}</div>
+      <div class="ml-4 text-3xl">{{consumptionToday?.value | number: '1.1-1'}}</div>
+      <div class="ml-1 text-lg">{{consumptionToday?.unit}}</div>
+    </div>
   </div>
 </div>

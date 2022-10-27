@@ -115,4 +115,28 @@ describe('MeasurementsService', () => {
     await service.calculateTransientMeasurements(sensor);
     expect(sensor.measurements[1].value).toBe(2342.22);
   });
+
+  it('should calculate transient measurements and apply multiplier', async () => {
+    queryApi.collectRows.mockReturnValue([
+      {
+        _value: 200, _time: '2014-11-10T23:00:00Z',
+      },
+    ]);
+    const sensor = new Sensor();
+    sensor.key = 'my-water-meter';
+    sensor.type = SensorType.WATER_METER;
+    sensor.measurements = [
+      { key: 'total', name: 'Total', unit: 'L' },
+      {
+        key: 'total_today',
+        name: 'Total today',
+        unit: 'L',
+        base_measurement: 'total',
+        multiplier: 0.5,
+        conversion: MeasurementConversion.DIFFERENCE_TODAY,
+      },
+    ];
+    await service.calculateTransientMeasurements(sensor);
+    expect(sensor.measurements[1].value).toBe(100);
+  });
 });

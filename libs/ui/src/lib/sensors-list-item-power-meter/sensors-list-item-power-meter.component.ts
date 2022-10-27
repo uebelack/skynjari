@@ -15,6 +15,10 @@ class SensorsListItemPowerMeterComponent {
   get consumptionToday(): Measurement | undefined {
     return this.sensor.measurements.find((measurement) => measurement.key === 'consumption_today');
   }
+
+  get costsToday(): Measurement | undefined {
+    return this.sensor.measurements.find((measurement) => measurement.key === 'costs_today');
+  }
 }
 
 export default SensorsListItemPowerMeterComponent;
