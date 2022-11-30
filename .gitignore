@@ -45,3 +45,5 @@ config/sensors.yaml
 config/mqtt.yaml
 
 .influxdb
+
+apps/backend.bak

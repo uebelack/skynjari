@@ -4,62 +4,78 @@
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:webpack",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "executor": "@nxrocks/nx-spring-boot:build",
       "options": {
-        "outputPath": "dist/apps/backend",
-        "main": "apps/backend/src/main.ts",
-        "tsConfig": "apps/backend/tsconfig.app.json",
-        "assets": [
-          "apps/backend/src/assets"
-        ]
+        "root": "apps/backend"
       },
-      "configurations": {
-        "production": {
-          "optimization": true,
-          "extractLicenses": true,
-          "inspect": false,
-          "fileReplacements": [
-            {
-              "replace": "apps/backend/src/environments/environment.ts",
-              "with": "apps/backend/src/environments/environment.prod.ts"
-            }
-          ]
-        }
+      "dependsOn": [
+        "^install"
+      ],
+      "outputs": [
+        "apps/backend/target"
+      ]
+    },
+    "install": {
+      "executor": "@nxrocks/nx-spring-boot:install",
+      "options": {
+        "root": "apps/backend"
+      },
+      "outputs": [
+        "apps/backend/target"
+      ]
+    },
+    "test": {
+      "executor": "@nxrocks/nx-spring-boot:test",
+      "options": {
+        "root": "apps/backend"
+      }
+    },
+    "clean": {
+      "executor": "@nxrocks/nx-spring-boot:clean",
+      "options": {
+        "root": "apps/backend"
+      }
+    },
+    "run": {
+      "executor": "@nxrocks/nx-spring-boot:run",
+      "options": {
+        "root": "apps/backend"
       }
     },
     "serve": {
-      "executor": "@nrwl/node:node",
+      "executor": "@nxrocks/nx-spring-boot:serve",
       "options": {
-        "buildTarget": "backend:build"
-      },
-      "configurations": {
-        "production": {
-          "buildTarget": "backend:build:production"
-        }
+        "root": "apps/backend"
       }
     },
-    "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+    "build-image": {
+      "executor": "@nxrocks/nx-spring-boot:build-image",
       "options": {
-        "lintFilePatterns": [
-          "apps/backend/**/*.ts"
-        ]
+        "root": "apps/backend"
       }
     },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/apps/backend"
-      ],
+    "build-info": {
+      "executor": "@nxrocks/nx-spring-boot:build-info",
       "options": {
-        "jestConfig": "apps/backend/jest.config.ts",
-        "passWithNoTests": true
+        "root": "apps/backend"
+      }
+    },
+    "format": {
+      "executor": "@nxrocks/nx-spring-boot:format",
+      "options": {
+        "root": "apps/backend"
+      }
+    },
+    "apply-format": {
+      "executor": "@nxrocks/nx-spring-boot:apply-format",
+      "options": {
+        "root": "apps/backend"
+      }
+    },
+    "check-format": {
+      "executor": "@nxrocks/nx-spring-boot:check-format",
+      "options": {
+        "root": "apps/backend"
       }
     }
   },

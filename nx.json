@@ -79,5 +79,8 @@
       "style": "scss"
     }
   },
-  "defaultProject": "frontend"
+  "defaultProject": "frontend",
+  "plugins": [
+    "@nxrocks/nx-spring-boot"
+  ]
 }

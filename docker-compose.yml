@@ -3,7 +3,7 @@ services:
     image: influxdb:2.4
     container_name: skynjari-influxdb
     ports:
-      - '8086:8086'
+      - '8386:8086'
     volumes:
       - $PWD/.influxdb/data:/var/lib/influxdb2
       - $PWD/.influxdb/config:/etc/influxdb2
