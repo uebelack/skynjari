@@ -1,13 +1,11 @@
-# ------------------------------------------------------
-# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
-# ------------------------------------------------------
-
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
 
-"""measurement"""
+"""
+measurement
+"""
 type Measurement {
   key: ID!
   name: String!
@@ -20,7 +18,9 @@ type Query {
   sensors: [Sensor!]!
 }
 
-"""sensor"""
+"""
+sensor
+"""
 type Sensor {
   key: ID!
   measurements: [Measurement!]!
@@ -41,7 +41,9 @@ type Subscription {
   sensorUpdated: Sensor!
 }
 
-"""tag"""
+"""
+tag
+"""
 type Tag {
   key: ID!
   value: String!
