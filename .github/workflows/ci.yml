@@ -8,10 +8,15 @@ on:
 jobs:
   main:
     runs-on: ubuntu-latest
-    steps:      
+    steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
+      - uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: "19"
+          cache: "maven"
       - uses: nrwl/nx-set-shas@v3
       - run: yarn install
       - run: npx nx workspace-lint
@@ -21,4 +26,3 @@ jobs:
       - uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-    
