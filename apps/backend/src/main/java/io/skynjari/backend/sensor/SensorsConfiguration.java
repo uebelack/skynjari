@@ -1,7 +1,6 @@
 package io.skynjari.backend.sensor;
 
 import java.util.Collection;
-
 import lombok.Getter;
 import lombok.Setter;
 

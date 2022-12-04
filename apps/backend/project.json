@@ -72,7 +72,7 @@
         "root": "apps/backend"
       }
     },
-    "check-format": {
+    "lint": {
       "executor": "@nxrocks/nx-spring-boot:check-format",
       "options": {
         "root": "apps/backend"

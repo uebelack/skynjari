@@ -1,5 +1,7 @@
 package io.skynjari.backend.sensor;
 
+import io.skynjari.backend.BackendConfiguration;
+import jakarta.annotation.PostConstruct;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.nio.file.Path;
@@ -10,20 +12,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
-
-import io.skynjari.backend.BackendConfiguration;
-import jakarta.annotation.PostConstruct;
 
 @Service
 public class SensorService {
 
   private static final Logger LOG = LoggerFactory.getLogger(SensorService.class);
 
-  @Autowired
-  private BackendConfiguration backendConfiguration;
+  @Autowired private BackendConfiguration backendConfiguration;
 
   private Map<String, Sensor> sensors;
 
@@ -38,8 +35,8 @@ public class SensorService {
   @PostConstruct
   private void init() throws FileNotFoundException {
     this.sensors = new HashMap<String, Sensor>();
-    String sensorsConfigurationPath = Path.of(backendConfiguration.getSensorsConfigurationPath()).toAbsolutePath()
-        .toString();
+    String sensorsConfigurationPath =
+        Path.of(backendConfiguration.getSensorsConfigurationPath()).toAbsolutePath().toString();
 
     LOG.info("Loading sensors configuration from {}", sensorsConfigurationPath);
 
@@ -47,7 +44,8 @@ public class SensorService {
 
     Yaml yaml = new Yaml(constructor);
 
-    SensorsConfiguration sensorsConfiguration = yaml.load(new FileInputStream(sensorsConfigurationPath));
+    SensorsConfiguration sensorsConfiguration =
+        yaml.load(new FileInputStream(sensorsConfigurationPath));
 
     for (Sensor sensor : sensorsConfiguration.getSensors()) {
       this.sensors.put(sensor.getKey(), sensor);

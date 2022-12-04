@@ -9,8 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class SensorServiceTest {
 
-  @Autowired
-  private SensorService sensorService;
+  @Autowired private SensorService sensorService;
 
   @Test
   void shouldReturnSensorForKey() {

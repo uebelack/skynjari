@@ -1,13 +1,13 @@
 package io.skynjari.backend.sensor;
 
+import io.skynjari.backend.measurement.Measurement;
+import io.skynjari.backend.tag.Tag;
 import java.util.Date;
 import java.util.List;
-import io.skynjari.backend.tag.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import io.skynjari.backend.measurement.Measurement;
 
 @Getter
 @Setter

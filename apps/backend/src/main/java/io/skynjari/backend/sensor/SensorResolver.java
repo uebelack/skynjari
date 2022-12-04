@@ -1,19 +1,16 @@
 package io.skynjari.backend.sensor;
 
+import io.skynjari.backend.NotFoundException;
 import java.util.Collection;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Component;
 
-import io.skynjari.backend.NotFoundException;
-
 @Component
 public class SensorResolver {
 
-  @Autowired
-  private SensorService sensorService;
+  @Autowired private SensorService sensorService;
 
   @QueryMapping("sensor")
   public Sensor getSensor(@Argument String key) {
@@ -28,7 +25,6 @@ public class SensorResolver {
   public Collection<Sensor> getSensors() {
     return sensorService.getSensors();
   }
-
 }
 
 // @Query(/* istanbul ignore next */returns => [Sensor])
