@@ -1,0 +1,1 @@
+sensorsConfigurationPath: ${SKYNJARI_SENSOR_CONFIGURATION_PATH:../../config/sensors.sample.yaml}

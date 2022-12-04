@@ -16,7 +16,7 @@ import io.skynjari.backend.measurement.Measurement;
 public class Sensor {
   private String key;
   private String name;
-  private SensorType sensorType;
+  private SensorType type;
   private Date updated;
   private List<Tag> tags;
   private List<Measurement> measurements;

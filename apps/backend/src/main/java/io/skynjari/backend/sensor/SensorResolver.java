@@ -1,6 +1,6 @@
 package io.skynjari.backend.sensor;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
@@ -25,7 +25,7 @@ public class SensorResolver {
     return sensor;
   }
 
-  public List<Sensor> getSensors() {
+  public Collection<Sensor> getSensors() {
     return sensorService.getSensors();
   }
 

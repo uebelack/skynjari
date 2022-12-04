@@ -11,6 +11,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
+import java.util.Arrays;
+
 @SpringBootTest
 public class SensorResolverTest {
 
@@ -25,6 +27,13 @@ public class SensorResolverTest {
     Sensor sensor = new Sensor();
     when(sensorService.getSensor("test")).thenReturn(sensor);
     assertEquals(sensor, sensorResolver.getSensor("test"));
+  }
+
+  @Test
+  void shouldReturnAllSensors() {
+    Sensor sensor = new Sensor();
+    when(sensorService.getSensors()).thenReturn(Arrays.asList(new Sensor[] { sensor }));
+    assertEquals(1, sensorResolver.getSensors().size());
   }
 
   @Test

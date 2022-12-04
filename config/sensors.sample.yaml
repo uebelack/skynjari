@@ -1,34 +1,115 @@
 sensors:
   - key: power-meter
-    name: Power
-    type: power-meter
+    name: Power Meter
+    type: POWER_METER
+    tags:
+      - key: building
+        value: home
     measurements:
-      consumption:
+      - key: "consumption"
         name: Consumption
-        unit: Wh
-      totalizer:
+        unit: W
+      - key: "totalizer"
         name: Totalizer
         unit: kWh
+      - key: consumption_today
+        name: Consumption Today
+        unit: kWh
+        baseMeasurement: totalizer
+        conversion: DIFFERENCE_TODAY
+      - key: costs_today
+        name: Costs Today
+        unit: USD
+        baseMeasurement: totalizer
+        conversion: DIFFERENCE_TODAY
+        multiplier: 0.321
+  - key: heating
+    name: Heating
+    type: HEATING_METER
+    tags:
+      - key: building
+        value: home
+    measurements:
+      - key: energy_total
+        name: Energy Total
+        unit: kWh
+      - key: energy_today
+        name: Energy Today
+        unit: kWh
+        baseMeasurement: energy_total
+        conversion: DIFFERENCE_TODAY
+      - key: volume_total
+        name: Volume Total
+        unit: L
+      - key: volume_today
+        name: Volume Today
+        unit: L
+        baseMeasurement: volume_total
+        conversion: DIFFERENCE_TODAY
+      - key: forward_temperature
+        name: Forward Temperature
+        unit: °C
+      - key: return_temperature
+        name: Return Temperature
+        unit: °C
   - key: water-meter
     name: Water
-    type: water-meter
+    type: WATER_METER
+    tags:
+      - key: building
+        value: home
     measurements:
-      consumption:
-        name: Consumption
+      - key: total
+        name: Total
         unit: L
-      totalizer:
-        name: Totalizer
+      - key: cold_total
+        name: Cold
         unit: L
-  - key: thermometer-living
-    name: Thermometer Living
-    type: thermometer
+      - key: hot_total
+        name: Hot
+        unit: L
+      - key: total_today
+        name: Total Today
+        baseMeasurement: total
+        conversion: DIFFERENCE_TODAY
+        unit: L
+      - key: cold_today
+        name: Cold Today
+        baseMeasurement: cold_total
+        conversion: DIFFERENCE_TODAY
+        unit: L
+      - key: hot_today
+        name: Hot Today
+        baseMeasurement: hot_total
+        conversion: DIFFERENCE_TODAY
+        unit: L
+  - key: thermometer-garden
+    name: Garden
+    type: THERMOMETER
+    tags:
+      - key: building
+        value: home
+      - key: room
+        value: garden
     measurements:
-      temperature:
+      - key: "temperature"
         name: Temperature
         unit: °C
-      humidity:
+      - key: "humidity"
         name: Humidity
-        unit: '%'
-      pressure:
-        name: Pressure
-        unit: hPa
+        unit: "%"
+  - key: thermometer-living
+    name: Living
+    type: THERMOMETER
+    tags:
+      - key: building
+        value: home
+      - key: room
+        value: living
+    measurements:
+      - key: "temperature"
+        name: Temperature
+        unit: °C
+      - key: "humidity"
+        name: Humidity
+        unit: "%"

@@ -15,7 +15,7 @@ public class Measurement {
   private String key;
   private String name;
   private String unit;
-  private Measurement base;
+  private String baseMeasurement;
   private MeasurementConversion conversion;
   private BigDecimal multiplier;
   private BigDecimal value;
