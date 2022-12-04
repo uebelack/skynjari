@@ -21,6 +21,7 @@ jobs:
       - run: npx nx affected --target=lint
       - run: sed -i.bak 's/yourcoverallsprojectrepositorytoken/${{ secrets.COVERALL_REPO_TOKEN }}/g' apps/backend/pom.xml
       - run: npx nx run-many --target=test --all --parallel --coverage --coverageReporters=lcov && ./node_modules/.bin/lcov-result-merger 'coverage/**/lcov.info' 'coverage/lcov.info'
+      - run: cd apps/backend && ./mvnw coveralls:report
       - if: ${{ always() }}
         run: if [ -f "apps/backend/pom.xml.bak" ]; then mv apps/backend/pom.xml.bak apps/backend/pom.xml; fi
       - run: npx nx affected --target=build
