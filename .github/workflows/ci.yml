@@ -7,24 +7,35 @@ jobs:
   main:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: 🧺 Checkout
+        uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - uses: actions/setup-java@v3
+      - name: ☕️ Setup Java
+        uses: actions/setup-java@v3
         with:
           distribution: "temurin"
           java-version: "19"
           cache: "maven"
-      - uses: nrwl/nx-set-shas@v3
-      - run: yarn install
-      - run: npx nx workspace-lint
-      - run: npx nx affected --target=lint
-      - run: sed -i.bak 's/yourcoverallsprojectrepositorytoken/${{ secrets.COVERALL_REPO_TOKEN }}/g' apps/backend/pom.xml
-      - run: npx nx run-many --target=test --all --parallel --coverage --coverageReporters=lcov && ./node_modules/.bin/lcov-result-merger 'coverage/**/lcov.info' 'coverage/lcov.info'
-      - run: cd apps/backend && ./mvnw coveralls:report
-      - if: ${{ always() }}
-        run: if [ -f "apps/backend/pom.xml.bak" ]; then mv apps/backend/pom.xml.bak apps/backend/pom.xml; fi
-      - run: npx nx affected --target=build
-      - uses: coverallsapp/github-action@master
+      - name: 🔐 Setup NX affected
+        uses: nrwl/nx-set-shas@v3
+      - name: 👩‍🔧 Install npm packages
+        run: yarn install
+      - name: 🚨 Lint sources
+        run: npx nx workspace-lint && npx nx affected --target=lint
+      - name: 👷‍♂️ Test
+        run: npx nx run-many --target=test --all --parallel --coverage --coverageReporters=lcov && ./node_modules/.bin/lcov-result-merger 'coverage/**/lcov.info' 'coverage/lcov.info'
+      - name: 🚀 Send java coveralls report
+        run: mvn coveralls:report \
+          --no-transfer-progress \
+          -D repoToken=${{ secrets.COVERALLS_TOKEN }} \
+          -D serviceName=github \
+          -D serviceBuildUrl=https://github.com/${{ github.repository }}/commit/${{ github.sha }}/checks \
+          -D branch=$BRANCH_NAME \
+          -D pullRequest=$PR_NUMBER
+      - name: 📦 Build
+        run: npx nx affected --target=build
+      - name: 🚀 Send js coveralls report
+        uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
