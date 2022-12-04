@@ -26,7 +26,7 @@ jobs:
       - name: 👷‍♂️ Test
         run: npx nx run-many --target=test --all --parallel --coverage --coverageReporters=lcov && ./node_modules/.bin/lcov-result-merger 'coverage/**/lcov.info' 'coverage/lcov.info'
       - name: 🚀 Send java coveralls report
-        run: mvn coveralls:report \
+        run: cd apps/backend && mvn coveralls:report \
           --no-transfer-progress \
           -D repoToken=${{ secrets.COVERALLS_TOKEN }} \
           -D serviceName=github \
