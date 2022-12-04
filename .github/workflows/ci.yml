@@ -25,14 +25,24 @@ jobs:
         run: npx nx workspace-lint && npx nx affected --target=lint
       - name: 👷‍♂️ Test
         run: npx nx run-many --target=test --all --parallel --coverage --coverageReporters=lcov && ./node_modules/.bin/lcov-result-merger 'coverage/**/lcov.info' 'coverage/lcov.info'
+      - name: 🛠️ Set branch name and PR number
+        id: refs
+        env:
+          BRANCH_NAME_OR_REF: ${{ github.head_ref || github.ref }}
+        run: |
+          echo "::set-output name=branch_name::${BRANCH_NAME_OR_REF#refs/heads/}"
+          echo "::set-output name=pr_number::$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")"
       - name: 🚀 Send java coveralls report
-        run: cd apps/backend && mvn coveralls:report \
+        env:
+          CI_NAME: Github
+          CI_BUILD_NUMBER: ${{ github.run_id }}
+          CI_BUILD_URL: https://github.com/${{ github.repository }}/commit/${{ github.event.after }}/checks
+          CI_BRANCH: ${{ steps.refs.outputs.branch_name }}
+          CI_PULL_REQUEST: ${{ steps.refs.outputs.pr_number }}
+        run: |
+          cd apps/backend && mvn coveralls:report \
           --no-transfer-progress \
-          -D repoToken=${{ secrets.COVERALLS_TOKEN }} \
-          -D serviceName=github \
-          -D serviceBuildUrl=https://github.com/${{ github.repository }}/commit/${{ github.sha }}/checks \
-          -D branch=$BRANCH_NAME \
-          -D pullRequest=$PR_NUMBER
+          -D repoToken=${{ secrets.COVERALLS_TOKEN }}
       - name: 📦 Build
         run: npx nx affected --target=build
       - name: 🚀 Send js coveralls report
