@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class BackendConfiguration {
-  @Value("${sensorsConfigurationPath}")
+  @Value("${skynjari.sensors.configuration.path}")
   private String sensorsConfigurationPath;
 
   @Bean

@@ -1,7 +1,7 @@
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
-scalar DateTime
+scalar Date
 
 """
 measurement
@@ -27,7 +27,7 @@ type Sensor {
   name: String!
   tags: [Tag!]!
   type: SensorType!
-  updated: DateTime
+  updated: Date
 }
 
 enum SensorType {
