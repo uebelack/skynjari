@@ -81,6 +81,32 @@ class MeasurementsService {
           }
         }
       }
+      if (measurement.conversion === MeasurementConversion.SUM_24H) {
+        console.log('SUM_24H-------------------');
+        const query = `
+          from(bucket: "${this.influxDBService.bucket()}")
+            |> range(start: -24h)
+            |> filter(fn: (r) => r._measurement == "${sensor.type}" and r.sensorKey == "${sensor.key}" and r._field == "${measurement.base_measurement}")
+            |> sum()
+        `;
+
+        console.log(query);
+
+        const result = await this.influxDBService.queryApi().collectRows(query);
+
+        console.log(result);
+
+        sensor.measurements[measurementIndex].value = 0;
+        if (result.length > 0) {
+          const row = (result[0] as { _value: number, _time: string });
+          const multiplier = measurement.multiplier || 1;
+          if (row._value < 0) {
+            sensor.measurements[measurementIndex].value = row._value * -1 * multiplier;
+          } else {
+            sensor.measurements[measurementIndex].value = row._value * multiplier;
+          }
+        }
+      }
     }
 
     if (measurementIndex + 1 < sensor.measurements.length) {
